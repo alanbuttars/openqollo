@@ -17,7 +17,7 @@ function register($email, $number, $password, $confirm) {
 	if (count ( array_filter ( $response ['errors'] ) ) == 0) {
 		$response ['success'] = registerUser ( $email, $number, $password );
 		if (empty ( $response ['success'] )) {
-			$response ['errors'] ['other'] = "The server failed to register user";
+			$response ['errors'] ['server'] = "The server failed to register user";
 		}
 	}
 	return $response;
