@@ -3,7 +3,13 @@
         "installed": [],
         "uninstalled": []
     },
-    "config_munge": {},
-    "installed_plugins": {},
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "de.phonostar.softkeyboard": {
+            "PACKAGE_NAME": "com.alanbuttars.qollo"
+        }
+    },
     "dependent_plugins": {}
 }

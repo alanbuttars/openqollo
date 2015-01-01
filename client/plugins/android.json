@@ -3,7 +3,24 @@
         "installed": [],
         "uninstalled": []
     },
-    "config_munge": {},
-    "installed_plugins": {},
+    "config_munge": {
+        "files": {
+            "res/xml/config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"SoftKeyboard\"><param name=\"android-package\" value=\"de.phonostar.SoftKeyboard\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "de.phonostar.softkeyboard": {
+            "PACKAGE_NAME": "com.alanbuttars.qollo"
+        }
+    },
     "dependent_plugins": {}
 }
