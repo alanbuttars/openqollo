@@ -27,3 +27,17 @@ qolloApp.directive('focusDirective', function() {
 		}
 	};
 });
+
+qolloApp.directive('script', function() {
+	return {
+		restrict: 'E',
+		scope: false,
+		link: function(scope, elem, attr) {
+			if (attr.type === 'text/javascript-lazy') {
+				var code = elem.text();
+				var func = new Function(code);
+				func();
+			}
+		}
+	};
+});

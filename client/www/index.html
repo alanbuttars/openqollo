@@ -1,41 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-        <title>OpenQollo</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>OpenQollo</title>
 
-        <link rel="stylesheet" href="bower_components/foundation/css/foundation.css">
-        <link rel="stylesheet" href="bower_components/foundation-icon-fonts/foundation-icons.css">
+    <link rel="stylesheet" href="bower_components/foundation/css/foundation.css">
+    <link rel="stylesheet" href="bower_components/foundation-icon-fonts/foundation-icons.css">
+</head>
+<body class="textured">
+    <div ui-view></div>
 
-    </head>
-    <body class="textured">
-        <div class="container">
-            <div ui-view></div>
-        </div>
+    <script src="cordova.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/foundation/js/foundation.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/softkeyboard.js"></script>
+    <script src="js/sha256.js"></script>
+    <script src="js/interceptors.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        <!-- For testing only -->
+        angular.bootstrap(document.body, ['qolloApp']);
 
-        <script src="cordova.js"></script>
-        <script src="bower_components/angular/angular.js"></script>
-        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-        <script src="bower_components/jquery/dist/jquery.js"></script>
-        <script src="bower_components/foundation/js/foundation.js"></script>
-        <script src="js/utils.js"></script>
-        <script src="js/app.js"></script>
-        <script src="js/controllers.js"></script>
-        <script src="js/services.js"></script>
-        <script src="js/directives.js"></script>
-        <script src="js/softkeyboard.js"></script>
+        document.addEventListener("deviceready", onDeviceReady, false);
 
-        <script type="text/javascript" charset="utf-8">
-            <!-- For testing only -->
+        function onDeviceReady() {
             angular.bootstrap(document.body, ['qolloApp']);
+        }
 
-            document.addEventListener("deviceready", onDeviceReady, false);
-
-            function onDeviceReady() {
-                angular.bootstrap(document.body, ['qolloApp']);
-            }
-
-        </script>
-    </body>
+    </script>
+</body>
 </html>

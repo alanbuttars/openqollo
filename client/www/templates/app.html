@@ -1,1 +1,67 @@
-<h1 class="text-center">I am the application</h1>
+<div class="wrapper">
+    <div class="content">
+        <div class="off-canvas-wrap" data-offcanvas>
+            <div class="inner-wrap" ng-controller="MenuCtrl">
+                <nav class="tab-bar">
+                    <div class="left">
+                        <div class="logo logo-top">
+                            <span>Open</span>
+                            <span>Qollo</span>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="icon-bar four-up">
+                            <a class="item" ui-sref="app.notifications" ui-sref-active="active">
+                                <i class="fi-results"></i>
+                            </a>
+                            <a class="item" ui-sref="camera">
+                                <i class="fi-camera"></i>
+                            </a>
+                            <a class="item" ui-sref="app.friends" ui-sref-active="active">
+                                <i class="fi-torsos-all"></i>
+                            </a>
+                            <a class="item right-off-canvas-toggle">
+                                <i class="fi-list"></i>
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+
+                <aside class="right-off-canvas-menu">
+                    <div class="icon-bar vertical four-up">
+                        <a ui-sref="menu.profile" class="item">
+                            <i class="fi-torso"></i>
+                            <label>Profile</label>
+                        </a>
+                        <a ui-sref="menu.account" class="item">
+                            <i class="fi-widget"></i>
+                            <label>Account</label>
+                        </a>
+                        <a ui-sref="menu.info" class="item">
+                            <i class="fi-info"></i>
+                            <label>Info</label>
+                        </a>
+                        <a ng-click="logout()" class="item">
+                            <i class="fi-lock"></i>
+                            <label>Lock</label>
+                        </a>
+                    </div>
+                </aside>
+
+                <section class="main-section">
+                    <div ui-view></div>
+                </section>
+
+                <a class="exit-off-canvas"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript-lazy">
+    $(document).foundation({
+        offcanvas: {
+		    close_on_click: true
+        }
+    });
+</script>

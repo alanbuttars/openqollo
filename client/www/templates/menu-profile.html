@@ -1,0 +1,54 @@
+<div class="row padding-top-large">
+    <div class="small-12 medium-8 medium-offset-2 large-6 large-offset-3 columns end">
+        <div class="profile-container">
+            <div class="profile">
+                <i class="fi-torso"></i>
+            </div>
+        </div>
+        <div class="padding-top-large">
+            <small class="error" ng-show="errors.server">{{errors.server}}</small>
+        </div>
+        <div class="row qollo-input-row collapse">
+            <div class="small-2 columns">
+                <div class="qollo-button">
+                    <i class="fi-mail"></i>
+                </div>
+            </div>
+            <div class="small-10 columns">
+                <div class="qollo-input">
+                    <label>
+                        <input type="text" value="{{data.email}}" disabled/>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row qollo-input-row collapse">
+            <div class="small-2 columns">
+                <div class="qollo-button">
+                    <i class="fi-telephone"></i>
+                </div>
+            </div>
+            <div class="small-10 columns">
+                <div class="qollo-input">
+                    <label>
+                        <input type="number" value="{{data.number}}" disabled/>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row qollo-input-row collapse">
+            <div class="small-2 columns">
+                <div class="qollo-button">
+                    <i class="fi-calendar"></i>
+                </div>
+            </div>
+            <div class="small-10 columns">
+                <div class="qollo-input">
+                    <label>
+                        <input type="text" value="{{data.timeCreatedFormatted}}" disabled/>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

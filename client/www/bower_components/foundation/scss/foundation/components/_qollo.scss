@@ -193,25 +193,105 @@ $qollo-xxxlarge: $h0-font-size !default;
 /** Logo                           **/
 /************************************/
 
-.logo-main {
-    @extend .text-center;
-    font-family: $style-font-family;
-    font-size: $qollo-xxxlarge;
-    padding-top: $qollo-medium;
+@mixin logo($secondChildLeft) {
+    span:nth-child(2) {
+        left: -$secondChildLeft;
+    }
+}
 
+.logo {
+    font-family: $style-font-family;
+    span {
+        display: inline-block;
+    }
     span:nth-child(1) {
         color: $white;
     }
     span:nth-child(2) {
         color: $primary-color;
         position: relative;
-        left: -12px;
+    }
+
+    &.logo-main {
+        @include logo(8px);
+        @extend .text-center;
+        font-size: $qollo-xxxlarge;
+        padding-top: $qollo-medium;
+    }
+    &.logo-top {
+        @include logo(3px);
+        font-size: $qollo-medium;
+        padding-left: $column-gutter / 2;
     }
 }
 
 /************************************/
 /** Multi-page design              **/
 /************************************/
+
+.qollo-menu {
+    position: absolute;
+    .qollo-menu-bookmark,
+    .qollo-menu-icon {
+        @extend .text-center;
+        min-width: $column-gutter + 2.5rem;
+        position: absolute;
+    }
+    .qollo-menu-bookmark {
+        top: -12px;
+        i {
+            font-size: $tabbar-height + 2rem;
+            color: $primary-color;
+        }
+    }
+    .qollo-menu-icon {
+        i {
+            font-size: $icon-bar-icon-size;
+        }
+    }
+    .logo {
+        display: block;
+        position: relative;
+        left: $column-gutter + 2.5rem;
+    }
+}
+
+.main-section {
+    min-height: 400px;
+}
+
+/************************************/
+/** Page-specific design           **/
+/************************************/
+
+.splash {
+    .logo-main {
+        @extend .text-center;
+        font-size: $qollo-xxxlarge;
+        @include absolute-center(35%);
+        padding-top: 0px;
+    }
+    .logo-message {
+        @extend .text-center;
+        font-size: $qollo-xsmall;
+        @extend .uppercase;
+        @include absolute-center(90%);
+        font-weight: 100;
+        letter-spacing: 3px;
+    }
+    .loading-message {
+        @extend .text-center;
+        @extend .uppercase;
+        @include absolute-center(90%);
+        font-size: $qollo-medium;
+        font-weight: 100;
+        letter-spacing: 2px;
+    }
+    .loading-spinner {
+        @extend .spinner;
+        @include absolute-center(15%);
+    }
+}
 
 ul.link-list {
     margin: 0;
@@ -272,4 +352,15 @@ ul.link-list {
     font-size: $qollo-large;
     min-height: $qollo-input-row-height;
     width: 100%;
+}
+
+.profile-container {
+    @include circle(200px, $qollo-gray-light);
+    @extend .horizontal-middle;
+
+    .profile {
+        @extend .text-center;
+        color: $black;
+        font-size: 140px;
+    }
 }
