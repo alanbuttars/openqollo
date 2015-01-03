@@ -15,9 +15,12 @@ qolloApp.factory('qolloInterceptor', ['$rootScope', '$injector',
         };
 
         var response = function(response) {
-            if (exists(response["filter"])) {
-                log("Interceptor {0}", JSON.stringify(response["filter"]));
-                $njector.get('$state').go('login');
+            if (exists(response["data"])) {
+                if (exists(response["data"]["filter"])) {
+                    log("Interceptor {0}", JSON.stringify(response["filter"]));
+                    $injector.get('$state').transitionTo('login');
+                    return $q.reject(response);
+                }
             }
             return response;
         }

@@ -134,7 +134,7 @@ qolloControllers.controller('ProfileCtrl', ['UserService', '$scope', '$state',
 
 				if (exists(successInfo)) {
 					$scope.data = successInfo;
-					$scope.data["timeCreatedFormatted"] = DateFormatter.formatRelative(Date.parse(successInfo["timeCreated"]));
+					$scope.data["timeCreatedFormatted"] = DateFormatter.toCalendarTime(successInfo["timeCreated"]);
 				}
 				else if (exists(errorInfo)) {
 					$scope.errors = errorInfo;
