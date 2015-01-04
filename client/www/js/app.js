@@ -9,15 +9,18 @@ qolloApp.config(function($stateProvider, $urlRouterProvider) {
     /* Introduction states */
     .state('splash', {
     	url : '/splash',
-    	templateUrl : 'templates/splash.html'
+    	templateUrl : 'templates/splash.html',
+    	controller : 'SplashCtrl'
     })
     .state('login', {
 		url : '/login',
-		templateUrl : 'templates/login.html'
+		templateUrl : 'templates/login.html',
+		controller : 'LoginCtrl'
 	})
 	.state('register', {
 		url : '/register',
-		templateUrl : 'templates/register.html'
+		templateUrl : 'templates/register.html',
+		controller : 'RegisterCtrl'
 	})
 	.state('forgot', {
     	url : '/forgot',

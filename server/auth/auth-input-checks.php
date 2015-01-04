@@ -22,7 +22,7 @@ function checkEmail($email) {
  * Validates email input is unique
  */
 function checkEmailUnique($email) {
-	$digestedEmail = digest($email, EMAIL_SALT);
+	$digestedEmail = encrypt($email, EMAIL_SALT);
 	
 	$conn = getConnection();
 	$sql = "SELECT email FROM users WHERE email = :encryptedEmail";
