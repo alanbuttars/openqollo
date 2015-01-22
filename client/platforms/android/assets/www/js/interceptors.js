@@ -1,5 +1,5 @@
-qolloApp.factory('qolloInterceptor', ['$rootScope', '$injector',
-    function($rootScope, $injector) {
+qolloApp.factory('qolloInterceptor', ['$injector', '$q', '$rootScope',
+    function($injector, $q, $rootScope) {
         var request = function($config) {
             var tokenPublic = window.localStorage.getItem('tokenPublic');
             var tokenPrivate = window.localStorage.getItem('tokenPrivate');
@@ -15,9 +15,12 @@ qolloApp.factory('qolloInterceptor', ['$rootScope', '$injector',
         };
 
         var response = function(response) {
-            if (exists(response["filter"])) {
-                log("Interceptor {0}", JSON.stringify(response["filter"]));
-                $njector.get('$state').go('login');
+            if (exists(response["data"])) {
+                if (exists(response["data"]["filter"])) {
+                    log("Interceptor {0}", JSON.stringify(response["filter"]));
+                    $injector.get('$state').transitionTo('login');
+                    return $q.reject(response);
+                }
             }
             return response;
         }

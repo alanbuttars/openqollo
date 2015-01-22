@@ -26,7 +26,8 @@
         open : {
           'opacity': 0,
           'visibility': 'visible',
-          'display' : 'block'
+          //'display' : 'block'
+          'display' : 'table'
         },
         close : {
           'opacity': 1,

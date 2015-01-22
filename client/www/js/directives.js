@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Directive for moving from inputs on tab presses
+ */
 qolloApp.directive('focusDirective', function() {
 
 	var getNextInput = function(currentInput) {
@@ -28,6 +31,9 @@ qolloApp.directive('focusDirective', function() {
 	};
 });
 
+/**
+ * Directive for lazily-loading JavaScript
+ */
 qolloApp.directive('script', function() {
 	return {
 		restrict: 'E',

@@ -37,8 +37,11 @@ function toString(object) {
     else if (object instanceof Array) {
         return "[" + object.toString() + "]";
     }
+    else if (object instanceof String) {
+        return object;
+    }
     else {
-        return object.toString();
+        return JSON.stringify(object, undefined, 4);
     }
 }
 
@@ -116,3 +119,57 @@ var DateFormatter = (function() {
         toString : toString
     };
 })();
+
+/************************************/
+/** Array functions                **/
+/************************************/
+
+function removeFromArray(object, array) {
+    return jQuery.grep(array, function(value) {
+        return value != object;
+    });
+}
+
+/************************************/
+/** Object functions               **/
+/************************************/
+
+function getObjectValues(objects, key) {
+    var values = [];
+    if (exists(objects)) {
+        for (var i = 0; i < objects.length; i++) {
+            var object = objects[i];
+            var value = object[key];
+            values.push(value);
+        }
+    }
+    return values;
+}
+
+function getObjectSize(object) {
+    var count = 0;
+    for (key in object) {
+        if (object.hasOwnProperty(key)) {
+            count++;
+        }
+    }
+    return count;
+}
+
+function getObjectSlice(object, startIndex, endIndex) {
+    var slice = {};
+    var count = 0;
+    for (var key in object) {
+        if (object.hasOwnProperty(key)) {
+            if (count >= startIndex && count < endIndex) {
+                slice[key] = object[key];
+            }
+        }
+        count++;
+    }
+    return slice;
+}
+
+/************************************/
+/** Object functions               **/
+/************************************/

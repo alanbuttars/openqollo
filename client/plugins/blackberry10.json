@@ -4,12 +4,47 @@
         "uninstalled": []
     },
     "config_munge": {
-        "files": {}
+        "files": {
+            "www/config.xml": {
+                "parents": {
+                    "/widget": [
+                        {
+                            "xml": "<feature name=\"com.blackberry.utils\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"com.blackberry.pim.lib\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Contacts\" value=\"Contacts\" />",
+                            "count": 1
+                        }
+                    ],
+                    "/widget/rim:permissions": [
+                        {
+                            "xml": "<rim:permit>access_pimdomain_contacts</rim:permit>",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
     },
     "installed_plugins": {
         "de.phonostar.softkeyboard": {
             "PACKAGE_NAME": "com.alanbuttars.qollo"
+        },
+        "org.apache.cordova.contacts": {
+            "PACKAGE_NAME": "com.alanbuttars.qollo"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "com.blackberry.utils": {
+            "PACKAGE_NAME": "com.alanbuttars.qollo"
+        },
+        "com.blackberry.pim.lib": {
+            "PACKAGE_NAME": "com.alanbuttars.qollo"
+        }
+    }
 }

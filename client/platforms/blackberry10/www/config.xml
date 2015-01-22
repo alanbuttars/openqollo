@@ -9,4 +9,10 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <feature name="com.blackberry.utils" />
+    <feature name="com.blackberry.pim.lib" />
+    <feature name="Contacts" value="Contacts" />
+    <rim:permissions>
+        <rim:permit>access_pimdomain_contacts</rim:permit>
+    </rim:permissions>
 </widget>

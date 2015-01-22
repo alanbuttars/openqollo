@@ -1,5 +1,14 @@
 /home/devsnack/gap/qollo/client/platforms/android/ant-build/classes.dex : \
 /home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/de/phonostar/SoftKeyboard.class \
+/home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/org/apache/cordova/contacts/ContactManager.class \
+/home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/org/apache/cordova/contacts/ContactManager$1.class \
+/home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/org/apache/cordova/contacts/ContactManager$2.class \
+/home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/org/apache/cordova/contacts/ContactManager$4.class \
+/home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/org/apache/cordova/contacts/ContactAccessorSdk5.class \
+/home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/org/apache/cordova/contacts/ContactManager$3.class \
+/home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/org/apache/cordova/contacts/ContactAccessor$WhereOptions.class \
+/home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/org/apache/cordova/contacts/ContactInfoDTO.class \
+/home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/org/apache/cordova/contacts/ContactAccessor.class \
 /home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/com/alanbuttars/qollo/R$xml.class \
 /home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/com/alanbuttars/qollo/R$attr.class \
 /home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/com/alanbuttars/qollo/R.class \

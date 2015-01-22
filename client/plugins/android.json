@@ -11,6 +11,28 @@
                         {
                             "xml": "<feature name=\"SoftKeyboard\"><param name=\"android-package\" value=\"de.phonostar.SoftKeyboard\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Contacts\"><param name=\"android-package\" value=\"org.apache.cordova.contacts.ContactManager\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "AndroidManifest.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.READ_CONTACTS\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\" />",
+                            "count": 1
                         }
                     ]
                 }
@@ -19,6 +41,9 @@
     },
     "installed_plugins": {
         "de.phonostar.softkeyboard": {
+            "PACKAGE_NAME": "com.alanbuttars.qollo"
+        },
+        "org.apache.cordova.contacts": {
             "PACKAGE_NAME": "com.alanbuttars.qollo"
         }
     },

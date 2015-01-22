@@ -32,12 +32,11 @@ function registerUser($email, $number, $password) {
 	$digestedPassword = digest($password, $salt);
 	$tokenPrivate = generateRandomString(128);
 	$tokenPublic = generateRandomString(128);
-	$currentTimestamp = getCurrentTimestamp();
 	
 	$conn = getConnection('read');
 	$sql = "INSERT INTO users " . 	//
 	"(email, number, salt, password, timeCreated, tokenPrivate, tokenPublic) " . 	//
-	"VALUES(:encryptedEmail1, :number, :salt, :digestedPassword, :currentTimestamp, :tokenPrivate, :tokenPublic); " . 	//
+	"VALUES(:encryptedEmail1, :number, :salt, :digestedPassword, now(), :tokenPrivate, :tokenPublic); " . 	//
 	"SELECT userId FROM users WHERE email = :encryptedEmail2";
 	$stmt = $conn->prepare($sql);
 	$stmt->bindParam(":number", $number, PDO::PARAM_STR);
@@ -47,7 +46,6 @@ function registerUser($email, $number, $password) {
 	$stmt->bindParam(":tokenPublic", $tokenPublic, PDO::PARAM_STR);
 	$stmt->bindParam(":encryptedEmail1", $encryptedEmail, PDO::PARAM_STR);
 	$stmt->bindParam(":encryptedEmail2", $encryptedEmail, PDO::PARAM_STR);
-	$stmt->bindParam(":currentTimestamp", $currentTimestamp, PDO::PARAM_STR);
 	
 	$inserted = array();
 	if ($stmt->execute()) {

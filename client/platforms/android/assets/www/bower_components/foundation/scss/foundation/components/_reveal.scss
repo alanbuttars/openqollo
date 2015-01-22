@@ -28,7 +28,8 @@ $reveal-box-shadow: 0 0 10px rgba($black,.4) !default;
 $reveal-close-font-size: rem-calc(40) !default;
 $reveal-close-top: rem-calc(10) !default;
 $reveal-close-side: rem-calc(22) !default;
-$reveal-close-color: $base !default;
+//$reveal-close-color: $base !default;
+$reveal-close-color: $white !default;
 $reveal-close-weight: $font-weight-bold !default;
 
 // We use this to set the default radius used throughout the core.
@@ -38,6 +39,7 @@ $reveal-round: $global-rounded !default;
 // We use these to control the modal border
 $reveal-border-style: solid !default;
 $reveal-border-width: 1px !default;
+//$reveal-border-width: 0px !default;
 $reveal-border-color: $steel !default;
 
 $reveal-modal-class: "reveal-modal" !default;
@@ -49,8 +51,8 @@ $close-reveal-modal-class: "close-reveal-modal" !default;
 
 // We use this to create the reveal background overlay styles
 @mixin reveal-bg( $include-z-index-value: true ) {
-  //position: fixed;
-  position: absolute; // allows modal background to extend beyond window position
+  position: fixed;
+  //position: absolute; // allows modal background to extend beyond window position
   top: 0;
   bottom: 0;
   left: 0;
@@ -71,10 +73,12 @@ $close-reveal-modal-class: "close-reveal-modal" !default;
   @if $base-style {
     visibility: hidden;
     display: none;
-    position: absolute;
+    //position: absolute;
+    position: fixed;
     z-index: 1005;
     width: 100vw;
-    top:0;
+    //top:0;
+    top: 0px !important;
     border-radius: $border-radius;
     #{$default-float}: 0;
 
@@ -89,6 +93,46 @@ $close-reveal-modal-class: "close-reveal-modal" !default;
     & > :first-child { margin-top: 0; }
 
     & > :last-child { margin-bottom: 0; }
+
+
+    .modal-header,
+    .modal-content,
+    .modal-footer {
+      //display: table-row;
+      display: block;
+
+      > div,
+      > h1,
+      > h2,
+      > h3,
+      > h4,
+      > h5,
+      > h6 {
+        display: table-cell;
+        padding: $column-gutter / 2;
+      }
+    }
+    .modal-header {
+      background: $primary-color;
+      height: 10%;
+      min-height: 50px;
+    }
+    .modal-content {
+      color: $oil;
+      height: 100%;
+      overflow-y: auto;
+      height: 75%;
+    }
+    .modal-footer {
+      height: 15%;
+      min-height: 90px;
+      width: 100%;
+      position: absolute;
+      .qollo-button {
+        margin-top: $column-gutter / 2;
+        margin-right: $column-gutter / 2;
+      }
+    }
   }
 
   @if $width {

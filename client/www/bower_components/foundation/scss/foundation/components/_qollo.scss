@@ -3,6 +3,7 @@
 /************************************/
 
 $qollo-input-icon-height: 24px;
+$footer-height: $tabbar-height * 1.1;
 
 $qollo-xxxsmall: $small-font-size;
 $qollo-xxsmall: $paragraph-font-size;
@@ -133,6 +134,16 @@ $qollo-xxxlarge: $h0-font-size !default;
     width: 100%;
 }
 
+i {
+    span {
+        font-size: $qollo-xxsmall;
+        font-style: normal;
+        position: relative;
+        top: -5px;
+        right: -2px;
+    }
+}
+
 /************************************/
 /** Spinner                        **/
 /************************************/
@@ -161,6 +172,10 @@ $qollo-xxxlarge: $h0-font-size !default;
     border-left: 1.1em solid $white;
     -webkit-animation: spinner8 1.1s infinite linear;
     animation: spinner8 1.1s infinite linear;
+
+    &.center {
+        @include absolute-center(35%);
+    }
 }
 .spinner,
 .spinner:after {
@@ -260,36 +275,71 @@ $qollo-xxxlarge: $h0-font-size !default;
     min-height: 400px;
 }
 
+slider {
+    position: relative;
+    bottom: .25rem;
+    height: .25rem;
+    margin: 0;
+    background: $primary-color;
+    border: none;
+    //transition: .3s ease-in-out;
+}
+
 /************************************/
 /** Page-specific design           **/
 /************************************/
 
+.message {
+    @extend .text-center;
+    @extend .uppercase;
+    font-weight: 100;
+
+    &.xxsmall {
+        font-size: $qollo-xxsmall;
+        letter-spacing: 2px;
+    }
+    &.xsmall {
+        font-size: $qollo-xsmall;
+        letter-spacing: 2px;
+    }
+    &.small {
+        font-size: $qollo-small;
+        letter-spacing: 3px;
+    }
+    &.medium {
+        font-size: $qollo-medium;
+        letter-spacing: 3px;
+    }
+    &.large {
+        font-size: $qollo-large;
+        letter-spacing: 4px;
+    }
+
+
+    &.center {
+        @include absolute-center(65%);
+        padding-left: $column-gutter / 2;
+        padding-right: $column-gutter / 2;
+        z-index: -1;
+    }
+}
+
 .splash {
     .logo-main {
         @extend .text-center;
-        font-size: $qollo-xxxlarge;
         @include absolute-center(35%);
+        font-size: $qollo-xxxlarge;
         padding-top: 0px;
     }
-    .logo-message {
-        @extend .text-center;
-        font-size: $qollo-xsmall;
-        @extend .uppercase;
-        @include absolute-center(90%);
-        font-weight: 100;
-        letter-spacing: 3px;
+    .splash-logo-message {
+        @extend .message;
+        @extend .xxsmall;
+        @include absolute-center(50%);
     }
-    .loading-message {
-        @extend .text-center;
-        @extend .uppercase;
-        @include absolute-center(90%);
-        font-size: $qollo-medium;
-        font-weight: 100;
-        letter-spacing: 2px;
-    }
-    .loading-spinner {
-        @extend .spinner;
-        @include absolute-center(15%);
+    .splash-loading-message {
+        @extend .message;
+        @extend .xxsmall;
+        @include absolute-center(80%);
     }
 }
 
@@ -333,7 +383,6 @@ ul.link-list {
     }
 }
 .qollo-input-row.error {
-
     .qollo-button {
         //border: 1px solid $alert-color;
     }
@@ -344,11 +393,15 @@ ul.link-list {
     }
 }
 
+.qollo-button,
 .qollo-button-main {
     @extend .button;
     @extend .radius;
     @extend .bolded;
     @extend .uppercase;
+}
+
+.qollo-button-main {
     font-size: $qollo-large;
     min-height: $qollo-input-row-height;
     width: 100%;
@@ -362,5 +415,74 @@ ul.link-list {
         @extend .text-center;
         color: $black;
         font-size: 140px;
+    }
+}
+
+ul.people-list {
+    margin: 0;
+    list-style: none;
+    font-size: $qollo-xsmall;
+}
+div.people-list {
+    width: 100%;
+
+    label {
+        width: 100%;
+        padding-top: $column-gutter / 2;
+        padding-bottom: $column-gutter / 2;
+        padding-left: $column-gutter / 2;
+        padding-right: $column-gutter / 2;
+        border-bottom: 1px dotted $tuatara;
+
+        font-size: $qollo-xsmall;
+        color: $white;
+
+        input {
+            display: none;
+        }
+        i {
+            @extend .right;
+            font-size: $qollo-small;
+            color: $white;
+            background-color: $primary-color;
+            padding: 5px 15px 5px 15px;
+            position: relative;
+            top: -5px;
+            border-radius: $global-radius;
+        }
+
+        &.selected {
+            background-color: lighten($oil, 10%);
+            i {
+                color: $primary-color;
+                background-color: $white;
+            }
+        }
+
+    }
+}
+
+.container {
+    margin-bottom: $footer-height;
+}
+.footer {
+    @extend .row;
+    @extend .text-center;
+    position: fixed;
+    bottom: 0;
+    height: $footer-height;
+    background-color: darken($oil, 5%);
+    padding-top: $qollo-xxsmall;
+
+    .footer-section {
+        @extend .small-6;
+        @extend .columns;
+        @extend .bolded;
+        @extend .uppercase;
+        font-size: $qollo-xsmall;
+        border-right: 2px solid $white;
+    }
+    .footer-section:last-child {
+        border-right: none;
     }
 }

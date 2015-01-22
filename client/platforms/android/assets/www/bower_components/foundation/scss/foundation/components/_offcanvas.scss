@@ -4,6 +4,7 @@
 
 @import "global";
 @import "type";
+@import "icon-bar";
 
 // Off Canvas Tab Bar Variables
 $include-html-off-canvas-classes: $include-html-classes !default;
@@ -176,6 +177,51 @@ $menu-slide: "transform 500ms ease" !default;
     margin: $tabbar-header-margin;
   }
   h1,h2,h3,h4 { font-size: $h5-font-size; }
+
+  div {
+    max-height: $tabbar-height;
+  }
+
+  &.tab-bar-sub {
+    background: lighten($tabbar-bg, 3%);
+  }
+
+  .qollo-filter {
+    width: 100%;
+
+    .qollo-filter-input {
+      overflow: hidden;
+      padding-left: $column-gutter / 2;
+      padding-top: 0.4rem;
+
+      input {
+        min-height: $tabbar-height - 0.6rem;
+        background-color: inherit;
+        color: inherit;
+        box-shadow: none;
+        border: none;
+        font-size: $paragraph-font-size;
+
+        &:focus {
+          background-color: inherit;
+          border: none;
+          outline: none;
+          box-shadow: none;
+        }
+      }
+    }
+    .qollo-filter-close {
+      @extend .right;
+      height: $tabbar-height - 0.6rem;
+      width: 50px;
+      font-size: $icon-bar-icon-size;
+
+      i {
+        padding: 0.9rem;
+      }
+    }
+  }
+
 }
 
 // SMALL SECTIONS

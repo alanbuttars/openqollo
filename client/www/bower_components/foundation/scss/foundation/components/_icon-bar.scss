@@ -23,12 +23,12 @@ $icon-bar-hover-color: transparent !default;
 $icon-bar-icon-color: $white !default;
 $icon-bar-icon-color-hover: $icon-bar-icon-color !default;
 //$icon-bar-icon-size: 1.875rem !default;
-$icon-bar-icon-size: 1.1rem !default;
+$icon-bar-icon-size: 1.3rem !default;
 $icon-bar-image-width: 1.875rem !default;
 $icon-bar-image-height: 1.875rem !default;
 $icon-bar-active-color: $primary-color !default;
 //$icon-bar-item-padding: 1.25rem !default;
-$icon-bar-item-padding-horizontal: 1.25rem !default;
+$icon-bar-item-padding-horizontal: 1.1rem !default;
 $icon-bar-item-padding-vertical: 0rem !default;
 $vertical-icon-bar-item-padding-horizontal: 1.25rem !default;
 $vertical-icon-bar-item-padding-vertical: 1.25rem !default;
@@ -67,6 +67,7 @@ $icon-bar-disabled-cursor: $cursor-default-value !default;
 			& + label {
 				margin-top: .0625rem;
 			}
+
 		}
 
 		i {
@@ -78,6 +79,7 @@ $icon-bar-disabled-cursor: $cursor-default-value !default;
 			width: $icon-bar-image-width;
 			height: $icon-bar-image-height;
 		}
+
 	}
 
 	&.vertical > * {
@@ -211,6 +213,12 @@ $icon-bar-disabled-cursor: $cursor-default-value !default;
 			label { color: $bar-font-color-hover; }
 
 			i { color: $bar-icon-color-hover; }
+
+		}
+
+		&.icon-bar-underline > a.active {
+			background: none;
+			border-bottom: 4px solid $primary-color;
 		}
 	}
   @if $disabled {
@@ -275,6 +283,7 @@ $icon-bar-disabled-cursor: $cursor-default-value !default;
 
 		&.one-up {
 			.item { width: 100%; }
+			slider { width: 100%; }
 			&.vertical .item, &.small-vertical .item { width: auto; }
 			&.medium-vertical .item {
 				@media #{$medium-up} {
@@ -293,6 +302,13 @@ $icon-bar-disabled-cursor: $cursor-default-value !default;
 
 		&.two-up {
 			.item { width: 50%; }
+			slider { width: 50%; }
+			a:nth-child(1):hover ~ slider {
+				margin-left: 0%;
+			}
+			a:nth-child(2):hover ~ slider {
+            	margin-left: 50%;
+            }
 			&.vertical .item, &.small-vertical .item { width: auto; }
 			&.medium-vertical .item {
 				@media #{$medium-up} {
@@ -307,6 +323,16 @@ $icon-bar-disabled-cursor: $cursor-default-value !default;
 		}
 		&.three-up {
 			.item { width: 33.3333%; }
+			slider { width: 33.3333%; }
+			a:nth-child(1):hover ~ slider {
+				margin-left: 0%;
+			}
+			a:nth-child(2):hover ~ slider {
+            	margin-left: 33.3333%;
+            }
+            a:nth-child(3):hover ~ slider {
+            	margin-left: 66.6667%;
+            }
 			&.vertical .item, &.small-vertical .item { width: auto; }
 			&.medium-vertical .item {
 				@media #{$medium-up} {
@@ -321,6 +347,19 @@ $icon-bar-disabled-cursor: $cursor-default-value !default;
 		}
 		&.four-up {
 			.item { width: 25%; }
+			slider { width: 25%; }
+			a:nth-child(1):hover ~ slider {
+				margin-left: 0%;
+			}
+			a:nth-child(2):hover ~ slider {
+            	margin-left: 25%;
+            }
+            a:nth-child(3):hover ~ slider {
+            	margin-left: 50%;
+            }
+            a:nth-child(4):hover ~ slider {
+            	margin-left: 75%;
+            }
 			&.vertical .item, &.small-vertical .item { width: auto; }
 			&.medium-vertical .item {
 				@media #{$medium-up} {
@@ -335,6 +374,22 @@ $icon-bar-disabled-cursor: $cursor-default-value !default;
 		}
 		&.five-up {
 			.item { width: 20%; }
+			slider { width: 20%; }
+			a:nth-child(1):hover ~ slider {
+				margin-left: 0%;
+			}
+			a:nth-child(2):hover ~ slider {
+            	margin-left: 20%;
+            }
+            a:nth-child(3):hover ~ slider {
+            	margin-left: 40%;
+            }
+            a:nth-child(4):hover ~ slider {
+            	margin-left: 60%;
+            }
+            a:nth-child(5):hover ~ slider {
+            	margin-left: 80%;
+           	}
 			&.vertical .item, &.small-vertical .item { width: auto; }
 			&.medium-vertical .item {
 				@media #{$medium-up} {
@@ -349,6 +404,25 @@ $icon-bar-disabled-cursor: $cursor-default-value !default;
 		}
 		&.six-up {
 			.item { width: 16.66667%; }
+			slider { width: 16.6667%; }
+			a:nth-child(1):hover ~ slider {
+				margin-left: 0%;
+			}
+			a:nth-child(2):hover ~ slider {
+				margin-left: 16.6667%;
+			}
+			a:nth-child(3):hover ~ slider {
+            	margin-left: 33.3333%;
+            }
+            a:nth-child(4):hover ~ slider {
+            	margin-left: 50%;
+            }
+            a:nth-child(5):hover ~ slider {
+            	margin-left: 66.6667%;
+            }
+            a:nth-child(6):hover ~ slider {
+            	margin-left: 83.3333%;
+           	}
 			&.vertical .item, &.small-vertical .item { width: auto; }
 			&.medium-vertical .item {
 				@media #{$medium-up} {

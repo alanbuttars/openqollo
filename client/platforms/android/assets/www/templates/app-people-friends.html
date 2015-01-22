@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="message center">{{message}}</div>
+    <div class="spinner center" ng-if="loading"></div>
+    <div class="people-list">
+        <label
+                ng-class="contact.selected ? 'selected' : ''"
+                ng-repeat="contact in contacts | filter:root.query | orderBy:'displayName'"
+                for="{{contact.contactId}}">
+            {{contact.displayName}}
+            <input id="{{contact.contactId}}" type="checkbox" ng-model="contact.selected"
+                   ng-change="select(contacts.indexOf(contact))"/>
+            <i class="fi-torso"><span>-</span></i>
+        </label>
+    </div>
+</div>
+<div class="footer" ng-show="contactsSelected.length > 0">
+    <a class="footer-section" ng-click="cancel()">
+        Cancel
+    </a>
+    <a class="footer-section" ng-click="openModal()">
+        Unfriend ({{contactsSelected.length}})
+    </a>
+</div>
+
+<div id="modal-people" class="reveal-modal collapse" data-reveal>
+    <div class="modal-header">
+        <h2>Confirm</h2>
+        <a class="close-reveal-modal">&#215;</a>
+    </div>
+    <div class="modal-content">
+        <div>
+            <p class="bolded">Unfriend the following {{contactsSelected.length}} contacts?</p>
+            <ul class="people-list">
+                <li ng-repeat="contact in contactsSelected | orderBy:'displayName'">{{contact.displayName}}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="qollo-button right" ng-click="confirm()">Remove friends</a>
+    </div>
+</div>
