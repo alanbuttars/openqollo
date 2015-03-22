@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS `friendships` (
 `receiverUserId` int(11) unsigned NOT NULL,
 `status` ENUM('new','accepted','denied','ended') NOT NULL,
 `encryptionKey` text NOT NULL,
+`viewed` boolean DEFAULT false,
 `timeSent` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
 `timeUpdated` timestamp NOT NULL DEFAULT now() on update now(),
 PRIMARY KEY (`friendshipId`),

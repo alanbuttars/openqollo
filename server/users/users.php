@@ -140,19 +140,19 @@ function getNumbersToUserIds($contacts) {
 function attachUserIdsToContacts($contacts, $numbersToUserIds) {
 	$attachedContacts = array();
 	foreach ($contacts as $contactId => $contact) {
-		$userId = null;
+		$contactUserId = null;
 		$displayName = $contact->displayName;
 		
 		foreach ($numbersToUserIds as $number => $userId) {
 			if (in_array($number, $contact->phoneNumbers)) {
-				$userId = $userId;
+				$contactUserId = $userId;
 				break;
 			}
 		}
 		
 		$attachedContacts[] = array(
 				"contactId" => $contactId, 
-				"userId" => $userId, 
+				"userId" => $contactUserId, 
 				"displayName" => $displayName
 		);
 	}
@@ -172,12 +172,11 @@ function attachFriendDataToContacts($userId, $contacts) {
 	$sent = getSentFriendRequests($userId, $contactUserIds);
 	$received = getReceivedFriendRequests($userId, $contactUserIds);
 	$friendData = array();
-	
 	foreach ($contacts as $contact) {
-		$contactUserId = intval($contact["userId"]);
+		$contactUserId = $contact["userId"];
 		if (isset($sent[$contactUserId]) && isset($received[$contactUserId])) {
 			$sentStatusInfo = $sent[$contactUserId];
-			$receivedStatusInfo = $received[$friendUserId];
+			$receivedStatusInfo = $received[$contactUserId];
 			$sentFriendshipId = $sentStatusInfo["friendshipId"];
 			$receivedFriendshipId = $receivedStatusInfo["friendshipId"];
 			
@@ -209,10 +208,9 @@ function attachFriendDataToContacts($userId, $contacts) {
 			$contact["friendshipType"] = null;
 			$contact["friendshipStatus"] = null;
 		}
-		// $friendData[] = $friendDatum;
+		$friendData[] = $contact;
 	}
-	return $contacts;
-	// return $friendData;
+	return $friendData;
 }
 
 ?>

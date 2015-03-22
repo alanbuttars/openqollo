@@ -36,22 +36,19 @@ function registerUser($email, $number, $password) {
 	$conn = getConnection('read');
 	$sql = "INSERT INTO users " . 	//
 	"(email, number, salt, password, timeCreated, tokenPrivate, tokenPublic) " . 	//
-	"VALUES(:encryptedEmail1, :number, :salt, :digestedPassword, now(), :tokenPrivate, :tokenPublic); " . 	//
-	"SELECT userId FROM users WHERE email = :encryptedEmail2";
+	"VALUES(:encryptedEmail, :number, :salt, :digestedPassword, now(), :tokenPrivate, :tokenPublic)";
 	$stmt = $conn->prepare($sql);
 	$stmt->bindParam(":number", $number, PDO::PARAM_STR);
 	$stmt->bindParam(":salt", $salt, PDO::PARAM_STR);
 	$stmt->bindParam(":digestedPassword", $digestedPassword, PDO::PARAM_STR);
 	$stmt->bindParam(":tokenPrivate", $tokenPrivate, PDO::PARAM_STR);
 	$stmt->bindParam(":tokenPublic", $tokenPublic, PDO::PARAM_STR);
-	$stmt->bindParam(":encryptedEmail1", $encryptedEmail, PDO::PARAM_STR);
-	$stmt->bindParam(":encryptedEmail2", $encryptedEmail, PDO::PARAM_STR);
+	$stmt->bindParam(":encryptedEmail", $encryptedEmail, PDO::PARAM_STR);
 	
 	$inserted = array();
 	if ($stmt->execute()) {
-		$stmt->nextRowset();
-		$row = $stmt->fetch(PDO::FETCH_ASSOC);
-		$inserted['userId'] = $row["userId"];
+		$userId = $conn->lastInsertId();
+		$inserted['userId'] = $userId;
 		$inserted['tokenPublic'] = $tokenPublic;
 		$inserted['tokenPrivate'] = $tokenPrivate;
 	}
