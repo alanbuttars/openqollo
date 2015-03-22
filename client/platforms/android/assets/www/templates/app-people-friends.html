@@ -7,13 +7,14 @@
                 ng-repeat="contact in contacts | filter:root.query | orderBy:'displayName'"
                 for="{{contact.contactId}}">
             {{contact.displayName}}
-            <input id="{{contact.contactId}}" type="checkbox" ng-model="contact.selected"
+            <input id="{{contact.contactId}}" type="checkbox"
+                   ng-model="contact.selected"
                    ng-change="select(contacts.indexOf(contact))"/>
             <i class="fi-torso"><span>-</span></i>
         </label>
     </div>
 </div>
-<div class="footer" ng-show="contactsSelected.length > 0">
+<div class="footer" ng-show="contactsSelected.length">
     <a class="footer-section" ng-click="cancel()">
         Cancel
     </a>
@@ -27,15 +28,22 @@
         <h2>Confirm</h2>
         <a class="close-reveal-modal">&#215;</a>
     </div>
-    <div class="modal-content">
-        <div>
-            <p class="bolded">Unfriend the following {{contactsSelected.length}} contacts?</p>
-            <ul class="people-list">
-                <li ng-repeat="contact in contactsSelected | orderBy:'displayName'">{{contact.displayName}}</li>
-            </ul>
+    <div class="modal-header" ng-show="confirmMessage" ng-class="confirmMessage == 'Success!' ? 'success' : 'error'">
+        <h2>{{confirmMessage}}</h2>
+    </div>
+    <div class="modal-content" ng-class="confirmMessage ? 'has-subheader' : ''">
+        <div class="row">
+            <div class="small-12 columns">
+                <p class="bolded">Unfriend the following contacts ({{contactsSelected.length}})?</p>
+
+                <ul class="people-list" ng-if="!confirmLoading">
+                    <li ng-repeat="contact in contactsSelected | orderBy:'displayName'">{{contact.displayName}}</li>
+                </ul>
+            </div>
         </div>
     </div>
+    <div ng-if="confirmLoading" class="spinner center-top"></div>
     <div class="modal-footer">
-        <a href="#" class="qollo-button right" ng-click="confirm()">Remove friends</a>
+        <a href="#" class="qollo-button right" ng-click="confirm('new')">Unfriend</a>
     </div>
 </div>

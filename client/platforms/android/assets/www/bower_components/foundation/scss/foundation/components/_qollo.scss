@@ -142,6 +142,17 @@ i {
         top: -5px;
         right: -2px;
     }
+
+    &.text {
+        @extend .uppercase;
+        @extend .bolded;
+        font-size: inherit;
+        font-style: normal;
+        position: inherit;
+        //top: 0px;
+        //right: 0px;
+    }
+
 }
 
 /************************************/
@@ -175,6 +186,10 @@ i {
 
     &.center {
         @include absolute-center(35%);
+    }
+
+    &.center-top {
+        @include absolute-center(10%);
     }
 }
 .spinner,
@@ -449,6 +464,14 @@ div.people-list {
             position: relative;
             top: -5px;
             border-radius: $global-radius;
+
+            &.text {
+                padding: none;
+            }
+            &.secondary {
+                color: $primary-color;
+                background-color: $white;
+            }
         }
 
         &.selected {

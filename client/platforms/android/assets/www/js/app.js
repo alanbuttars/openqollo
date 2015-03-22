@@ -35,8 +35,10 @@ qolloApp.config(function($stateProvider, $urlRouterProvider) {
 	})
 	.state('app.notifications', {
 		url : '/notifications',
-		templateUrl : 'templates/app-notifications.html'
+		templateUrl : 'templates/app-notifications.html',
+		controller : 'NotificationsCtrl'
 	})
+	/* App people states */
 	.state('app.people', {
 		url : '/people',
 		templateUrl : 'templates/app-people.html',

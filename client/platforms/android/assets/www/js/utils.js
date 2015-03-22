@@ -35,7 +35,11 @@ function toString(object) {
         return "null";
     }
     else if (object instanceof Array) {
-        return "[" + object.toString() + "]";
+        var contents = [];
+        for (var i = 0; i < object.length; i++) {
+            contents.push(toString(object[i]));
+        }
+        return "[" + contents.toString() + "]";
     }
     else if (object instanceof String) {
         return object;
@@ -168,6 +172,35 @@ function getObjectSlice(object, startIndex, endIndex) {
         count++;
     }
     return slice;
+}
+
+function fillArray(value, length) {
+    var array = [];
+    for (var i = 0; i < length; i++) {
+        array.push(value);
+    }
+	return array;
+}
+
+function unfreeze(object) {
+    var unfrozen = undefined;
+    if (object instanceof Array) {
+        unfrozen = [];
+        var clone = function(value) {
+            unfrozen.push(value);
+        }
+        object.forEach(clone);
+    }
+    else if (object instanceof String) {
+        unfrozen = new String(object).toString();
+    }
+    else if (typeof object == 'object') {
+        unfrozen = {};
+        for (var property in object) {
+            unfrozen[property] = object[property];
+        }
+    }
+    return unfrozen;
 }
 
 /************************************/

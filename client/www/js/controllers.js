@@ -146,10 +146,13 @@ qolloControllers.controller('AppCtrl', ['$rootScope', '$scope', '$state',
 		});
 }]);
 
-qolloControllers.controller('MenuCtrl', ['AuthService', '$scope', '$state', '$window',
-	function(AuthService, $scope, $state, $window) {
+qolloControllers.controller('MenuCtrl', ['AuthService', 'DatabaseService', '$scope', '$state', '$window',
+	function(AuthService, DatabaseService, $scope, $state, $window) {
 
 		$scope.logout = function() {
+			DatabaseService.resetContactCache("friends");
+			DatabaseService.resetContactCache("users");
+			DatabaseService.resetContactCache("contacts");
 			AuthService.logout();
 			$state.go('login');
 		};
@@ -198,8 +201,59 @@ qolloControllers.controller('ProfileCtrl', ['UserService', '$scope', '$state',
 		);
 }]);
 
-qolloControllers.controller('PeopleCtrl', ['DatabaseService', '$rootScope', '$scope', '$state',
-	function(DatabaseService, $rootScope, $scope, $state) {
+qolloControllers.controller('NotificationsCtrl', ['DatabaseService', 'FriendService', '$scope', '$state',
+	function(DatabaseService, FriendService, $scope, $state) {
+
+		$scope.friendships = {
+			loading : true,
+			data : {},
+			error : null
+		};
+
+		FriendService.getFriendshipNotifications().then(
+			function(notifications) {
+				DatabaseService.attachContactData(notifications).then(
+					function(data) {
+						$scope.friendships.loading = false;
+						$scope.friendships.data = data;
+						$scope.friendships.error = null;
+					},
+					function(error) {
+						$scope.friendships.loading = false;
+						$scope.friendships.data = {};
+						$scope.friendships.error = error;
+					}
+				)
+			},
+			function(error) {
+				$scope.friendships.loading = false;
+				$scope.friendships.data = {};
+				$scope.friendships.error = error;
+			}
+		);
+
+		$scope.updateStatus = function(contactIndex, status) {
+			var contact = $scope.friendships.data[contactIndex];
+			var contacts = [contact];
+			FriendService.updateStatus(contacts, status).then(
+        		function(data) {
+        			DatabaseService.updateContactsStatus(contacts, status);
+        		}
+        	);
+
+        	$scope.friendships.data = removeFromArray(contact, $scope.friendships.data);
+
+        	if (status == "accepted") {
+        		DatabaseService.resetContactCache("friends");
+        	}
+        	else if (status == "denied") {
+        		DatabaseService.resetContactCache("users");
+        	}
+		};
+}]);
+
+qolloControllers.controller('PeopleCtrl', ['DatabaseService', 'FriendService', '$rootScope', '$scope', '$state', '$timeout',
+	function(DatabaseService, FriendService, $rootScope, $scope, $state, $timeout) {
 
     	if ($state.current.name == "app.people") {
     		$state.go('app.people.friends');
@@ -211,9 +265,12 @@ qolloControllers.controller('PeopleCtrl', ['DatabaseService', '$rootScope', '$sc
 		$scope.message = null;
 		$scope.loading = true;
 
+		$scope.confirmMessage = null;
+		$scope.confirmLoading = false;
+
 		$scope.select = function(contactIndex) {
 			var contact = $scope.contacts[contactIndex];
-			if (contact["selected"]) {
+			if (contact.selected) {
 				$scope.contactsSelected.push(contact);
 			}
 			else {
@@ -221,9 +278,70 @@ qolloControllers.controller('PeopleCtrl', ['DatabaseService', '$rootScope', '$sc
 			}
 		};
 
+		$scope.updateContactsStatusOnUi = function(status) {
+			for (var i = 0; i < $scope.contacts.length; i++) {
+				var contact = unfreeze($scope.contacts[i]);
+				if (contact.selected) {
+                	if (status == "invited") {
+                    	contact.invited = 1;
+                	}
+                	else if (status == "new") {
+                    	contact.friendshipStatus = "new";
+                    	contact.friendshipType = "sent";
+                	}
+                	else if (status == "ended") {
+                    	contact.friendshipStatus = "ended";
+                    	contact.friendshipType = null;
+                	}
+                	else if (status == "denied") {
+                    	contact.friendshipStatus = "denied";
+                	}
+                	else if (status == "accepted") {
+                    	contact.friendshipStatus = "accepted";
+                	}
+
+   					log("updated {0}", contact);
+				}
+			}
+		}
+
+		$scope.confirm = function(status) {
+			$scope.confirmLoading = true;
+			$scope.confirmMessage = null;
+			FriendService.updateStatus($scope.contactsSelected, status).then(
+				function(data) {
+					$scope.confirmLoading = false;
+					var successInfo = data["success"];
+					var errorInfo = data["errors"];
+
+					if (exists(successInfo)) {
+						DatabaseService.updateContactsStatus($scope.contactsSelected, status);
+						$scope.confirmMessage = "Success!";
+						$timeout(function() {
+							//$scope.updateContactsStatusOnUi(status);
+							DatabaseService.resetContactCache($state.current.contactType);
+							$scope.closeModal();
+							$scope.confirmMessage = null;
+							$scope.onload();
+						}, 300);
+					}
+					else if (exists(errorInfo)) {
+						$scope.confirmMessage = errorInfo;
+					}
+					else {
+						$scope.confirmMessage = "Failed to contact the server";
+					}
+				},
+				function(error) {
+					$scope.confirmLoading = false;
+					$scope.confirmMessage = "Failed to contact the server";
+				}
+			);
+		};
+
 		$scope.cancel = function() {
 			for (var i = 0; i < $scope.contacts.length; i++) {
-				$scope.contacts[i]["selected"] = false;
+				$scope.contacts[i].selected = false;
 			}
 			$scope.contactsSelected = [];
 		};
@@ -232,7 +350,15 @@ qolloControllers.controller('PeopleCtrl', ['DatabaseService', '$rootScope', '$sc
 			$("#modal-people").foundation('reveal', 'open');
 		};
 
+		$scope.closeModal = function() {
+			$("#modal-people").foundation('reveal', 'close');
+		};
+
 		$scope.onload = function() {
+			$scope.loading = true;
+			$scope.message = null;
+			$scope.contacts = [];
+			$scope.contactsSelected = [];
 			DatabaseService.getContactsByType($state.current.contactType).then(
 				function(contacts) {
 					$scope.loading = false;
@@ -243,8 +369,8 @@ qolloControllers.controller('PeopleCtrl', ['DatabaseService', '$rootScope', '$sc
 						$scope.contacts = contacts;
 						for (var i = 0; i < $scope.contacts.length; i++) {
 							var contact = $scope.contacts[i];
-							if (contact["selected"]) {
-								$scope.contactsSelected.push(contact);
+							if (contact.selected) {
+								$scope.contactsSelected++;
 							}
 						}
 					}
@@ -258,34 +384,26 @@ qolloControllers.controller('PeopleCtrl', ['DatabaseService', '$rootScope', '$sc
 
 }]);
 
-qolloControllers.controller('FriendsCtrl', ['DatabaseService', '$controller', '$rootScope', '$scope', '$state',
-	function(DatabaseService, $controller, $rootScope, $scope, $state) {
-		$controller('PeopleCtrl', {DatabaseService : DatabaseService, $rootScope : $rootScope, $scope : $scope, $state : $state});
+qolloControllers.controller('FriendsCtrl', ['DatabaseService', '$controller', '$rootScope', '$scope', '$state', '$timeout',
+	function(DatabaseService, $controller, $rootScope, $scope, $state, $timeout) {
+		$controller('PeopleCtrl', {DatabaseService : DatabaseService, $rootScope : $rootScope, $scope : $scope, $state : $state, $timeout : $timeout});
 
 		$scope.onload();
-
-		$scope.confirm = function() {
-		};
 
 }]);
 
-qolloControllers.controller('UsersCtrl', ['DatabaseService', '$controller', '$rootScope', '$scope', '$state',
-	function(DatabaseService, $controller, $rootScope, $scope, $state) {
-		$controller('PeopleCtrl', {DatabaseService : DatabaseService, $rootScope : $rootScope, $scope : $scope, $state : $state});
+qolloControllers.controller('UsersCtrl', ['DatabaseService', '$controller', '$rootScope', '$scope', '$state', '$timeout',
+	function(DatabaseService, $controller, $rootScope, $scope, $state, $timeout) {
+		$controller('PeopleCtrl', {DatabaseService : DatabaseService, $rootScope : $rootScope, $scope : $scope, $state : $state, $timeout : $timeout});
 
 		$scope.onload();
-
-		$scope.confirm = function() {
-       	};
 
 }]);
 
-qolloControllers.controller('ContactsCtrl', ['DatabaseService', '$controller', '$rootScope', '$scope', '$state',
-	function(DatabaseService, $controller, $rootScope, $scope, $state) {
-		$controller('PeopleCtrl', {DatabaseService : DatabaseService, $rootScope : $rootScope, $scope : $scope, $state : $state});
+qolloControllers.controller('ContactsCtrl', ['DatabaseService', '$controller', '$rootScope', '$scope', '$state', '$timeout',
+	function(DatabaseService, $controller, $rootScope, $scope, $state, $timeout) {
+		$controller('PeopleCtrl', {DatabaseService : DatabaseService, $rootScope : $rootScope, $scope : $scope, $state : $state, $timeout : $timeout});
 
 		$scope.onload();
 
-		$scope.confirm = function() {
-        };
 }]);

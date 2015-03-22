@@ -96,10 +96,12 @@ $close-reveal-modal-class: "close-reveal-modal" !default;
 
 
     .modal-header,
+    .modal-subheader,
     .modal-content,
     .modal-footer {
       //display: table-row;
       display: block;
+      width: 100%;
 
       > div,
       > h1,
@@ -112,25 +114,37 @@ $close-reveal-modal-class: "close-reveal-modal" !default;
         padding: $column-gutter / 2;
       }
     }
-    .modal-header {
-      background: $primary-color;
+    .modal-header,
+    .modal-subheader {
+      background: $qollo-gray;
       height: 10%;
       min-height: 50px;
+
+      &.success {
+        background: $primary-color;
+      }
+      &.error {
+        background: $alert-color;
+      }
     }
     .modal-content {
       color: $oil;
       height: 100%;
       overflow-y: auto;
       height: 75%;
+
+      &.has-subheader {
+        height: 65%;
+      }
     }
     .modal-footer {
       height: 15%;
       min-height: 90px;
-      width: 100%;
       position: absolute;
       .qollo-button {
         margin-top: $column-gutter / 2;
         margin-right: $column-gutter / 2;
+        background: $primary-color;
       }
     }
   }

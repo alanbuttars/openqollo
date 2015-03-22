@@ -1251,8 +1251,8 @@ select {
   .alert-box.round {
     border-radius: 1000px; }
   .alert-box.success {
-    background-color: #43AC6A;
-    border-color: #3a945b;
+    background-color: #00904B;
+    border-color: #007c41;
     color: #FFFFFF; }
   .alert-box.alert {
     background-color: #f04124;
@@ -1676,13 +1676,13 @@ button, .button, .qollo-input-row .qollo-button, .qollo-button,
       color: #333333; }
   button.success, .button.success, .success.qollo-button,
   .success.qollo-button-main {
-    background-color: #43AC6A;
-    border-color: #368a55;
+    background-color: #00904B;
+    border-color: #00733c;
     color: #FFFFFF; }
     button.success:hover, button.success:focus, .button.success:hover, .success.qollo-button:hover,
     .success.qollo-button-main:hover, .button.success:focus, .success.qollo-button:focus,
     .success.qollo-button-main:focus {
-      background-color: #368a55; }
+      background-color: #00733c; }
     button.success:hover, button.success:focus, .button.success:hover, .success.qollo-button:hover,
     .success.qollo-button-main:hover, .button.success:focus, .success.qollo-button:focus,
     .success.qollo-button-main:focus {
@@ -1837,8 +1837,8 @@ button, .button, .qollo-input-row .qollo-button, .qollo-button,
     button.disabled.success, button[disabled].success, .button.disabled.success, .disabled.success.qollo-button,
     .disabled.success.qollo-button-main, .button[disabled].success, [disabled].success.qollo-button,
     [disabled].success.qollo-button-main {
-      background-color: #43AC6A;
-      border-color: #368a55;
+      background-color: #00904B;
+      border-color: #00733c;
       color: #FFFFFF;
       cursor: default;
       opacity: 0.7;
@@ -1848,7 +1848,7 @@ button, .button, .qollo-input-row .qollo-button, .qollo-button,
       .disabled.success.qollo-button-main:focus, .button[disabled].success:hover, [disabled].success.qollo-button:hover,
       [disabled].success.qollo-button-main:hover, .button[disabled].success:focus, [disabled].success.qollo-button:focus,
       [disabled].success.qollo-button-main:focus {
-        background-color: #368a55; }
+        background-color: #00733c; }
       button.disabled.success:hover, button.disabled.success:focus, button[disabled].success:hover, button[disabled].success:focus, .button.disabled.success:hover, .disabled.success.qollo-button:hover,
       .disabled.success.qollo-button-main:hover, .button.disabled.success:focus, .disabled.success.qollo-button:focus,
       .disabled.success.qollo-button-main:focus, .button[disabled].success:hover, [disabled].success.qollo-button:hover,
@@ -1860,7 +1860,7 @@ button, .button, .qollo-input-row .qollo-button, .qollo-button,
       .disabled.success.qollo-button-main:focus, .button[disabled].success:hover, [disabled].success.qollo-button:hover,
       [disabled].success.qollo-button-main:hover, .button[disabled].success:focus, [disabled].success.qollo-button:focus,
       [disabled].success.qollo-button-main:focus {
-        background-color: #43AC6A; }
+        background-color: #00904B; }
     button.disabled.alert, button[disabled].alert, .button.disabled.alert, .disabled.alert.qollo-button,
     .disabled.alert.qollo-button-main, .button[disabled].alert, [disabled].alert.qollo-button,
     [disabled].alert.qollo-button-main {
@@ -4004,7 +4004,7 @@ kbd {
     background-color: #f08a24;
     color: #FFFFFF; }
   .label.success {
-    background-color: #43AC6A;
+    background-color: #00904B;
     color: #FFFFFF; }
   .label.secondary, .qollo-input-row .label.qollo-button {
     background-color: #EFEFEF;
@@ -4412,7 +4412,7 @@ ul.pagination {
     height: 100%;
     display: block; }
   .progress.success .meter {
-    background: #43AC6A;
+    background: #00904B;
     height: 100%;
     display: block; }
   .progress.alert .meter {
@@ -4548,11 +4548,14 @@ ul.pagination {
   .reveal-modal > :last-child, dialog > :last-child {
     margin-bottom: 0; }
   .reveal-modal .modal-header, dialog .modal-header,
+  .reveal-modal .modal-subheader,
+  dialog .modal-subheader,
   .reveal-modal .modal-content,
   dialog .modal-content,
   .reveal-modal .modal-footer,
   dialog .modal-footer {
-    display: block; }
+    display: block;
+    width: 100%; }
     .reveal-modal .modal-header > div, dialog .modal-header > div,
     .reveal-modal .modal-header > h1,
     dialog .modal-header > h1,
@@ -4566,6 +4569,20 @@ ul.pagination {
     dialog .modal-header > h5,
     .reveal-modal .modal-header > h6,
     dialog .modal-header > h6,
+    .reveal-modal .modal-subheader > div,
+    dialog .modal-subheader > div,
+    .reveal-modal .modal-subheader > h1,
+    dialog .modal-subheader > h1,
+    .reveal-modal .modal-subheader > h2,
+    dialog .modal-subheader > h2,
+    .reveal-modal .modal-subheader > h3,
+    dialog .modal-subheader > h3,
+    .reveal-modal .modal-subheader > h4,
+    dialog .modal-subheader > h4,
+    .reveal-modal .modal-subheader > h5,
+    dialog .modal-subheader > h5,
+    .reveal-modal .modal-subheader > h6,
+    dialog .modal-subheader > h6,
     .reveal-modal .modal-content > div,
     dialog .modal-content > div,
     .reveal-modal .modal-content > h1,
@@ -4596,23 +4613,35 @@ ul.pagination {
     dialog .modal-footer > h6 {
       display: table-cell;
       padding: 0.9375rem; }
-  .reveal-modal .modal-header, dialog .modal-header {
-    background: #00904B;
+  .reveal-modal .modal-header, dialog .modal-header,
+  .reveal-modal .modal-subheader,
+  dialog .modal-subheader {
+    background: #999999;
     height: 10%;
     min-height: 50px; }
+    .reveal-modal .modal-header.success, dialog .modal-header.success,
+    .reveal-modal .modal-subheader.success,
+    dialog .modal-subheader.success {
+      background: #00904B; }
+    .reveal-modal .modal-header.error, dialog .modal-header.error,
+    .reveal-modal .modal-subheader.error,
+    dialog .modal-subheader.error {
+      background: #f04124; }
   .reveal-modal .modal-content, dialog .modal-content {
     color: #333333;
     height: 100%;
     overflow-y: auto;
     height: 75%; }
+    .reveal-modal .modal-content.has-subheader, dialog .modal-content.has-subheader {
+      height: 65%; }
   .reveal-modal .modal-footer, dialog .modal-footer {
     height: 15%;
     min-height: 90px;
-    width: 100%;
     position: absolute; }
     .reveal-modal .modal-footer .qollo-button, dialog .modal-footer .qollo-button {
       margin-top: 0.9375rem;
-      margin-right: 0.9375rem; }
+      margin-right: 0.9375rem;
+      background: #00904B; }
   @media only screen and (min-width: 40.063em) {
     .reveal-modal, dialog {
       width: 80%;
@@ -5401,13 +5430,13 @@ meta.foundation-mq-topbar {
           color: #333333; }
       .top-bar-section ul li > a.button.success, .top-bar-section ul .qollo-input-row li > a.success.qollo-button, .top-bar-section ul li > a.success.qollo-button,
       .top-bar-section ul li > a.success.qollo-button-main {
-        background-color: #43AC6A;
-        border-color: #368a55;
+        background-color: #00904B;
+        border-color: #00733c;
         color: #FFFFFF; }
         .top-bar-section ul li > a.button.success:hover, .top-bar-section ul .qollo-input-row li > a.success.qollo-button:hover, .top-bar-section ul li > a.success.qollo-button:hover,
         .top-bar-section ul li > a.success.qollo-button-main:hover, .top-bar-section ul li > a.button.success:focus, .top-bar-section ul .qollo-input-row li > a.success.qollo-button:focus, .top-bar-section ul li > a.success.qollo-button:focus,
         .top-bar-section ul li > a.success.qollo-button-main:focus {
-          background-color: #368a55; }
+          background-color: #00733c; }
         .top-bar-section ul li > a.button.success:hover, .top-bar-section ul .qollo-input-row li > a.success.qollo-button:hover, .top-bar-section ul li > a.success.qollo-button:hover,
         .top-bar-section ul li > a.success.qollo-button-main:hover, .top-bar-section ul li > a.button.success:focus, .top-bar-section ul .qollo-input-row li > a.success.qollo-button:focus, .top-bar-section ul li > a.success.qollo-button:focus,
         .top-bar-section ul li > a.success.qollo-button-main:focus {
@@ -5458,11 +5487,11 @@ meta.foundation-mq-topbar {
         .top-bar-section ul li > button.secondary:hover, .top-bar-section ul .qollo-input-row li > button.qollo-button:hover, .qollo-input-row .top-bar-section ul li > button.qollo-button:hover, .top-bar-section ul li > button.secondary:focus, .top-bar-section ul .qollo-input-row li > button.qollo-button:focus, .qollo-input-row .top-bar-section ul li > button.qollo-button:focus {
           color: #333333; }
       .top-bar-section ul li > button.success {
-        background-color: #43AC6A;
-        border-color: #368a55;
+        background-color: #00904B;
+        border-color: #00733c;
         color: #FFFFFF; }
         .top-bar-section ul li > button.success:hover, .top-bar-section ul li > button.success:focus {
-          background-color: #368a55; }
+          background-color: #00733c; }
         .top-bar-section ul li > button.success:hover, .top-bar-section ul li > button.success:focus {
           color: #FFFFFF; }
       .top-bar-section ul li > button.alert {
@@ -7151,7 +7180,7 @@ th.hide-for-touch {
 /************************************/
 /** Utility text                   **/
 /************************************/
-.uppercase, .message, .splash .splash-logo-message, .splash .splash-loading-message, ul.link-list li a, .qollo-button,
+.uppercase, i.text, .message, .splash .splash-logo-message, .splash .splash-loading-message, ul.link-list li a, .qollo-button,
 .qollo-button-main, .footer .footer-section {
   text-transform: uppercase; }
 
@@ -7161,7 +7190,7 @@ th.hide-for-touch {
 .capitalize {
   text-transform: capitalize; }
 
-.bolded, ul.link-list li a, .qollo-button,
+.bolded, i.text, ul.link-list li a, .qollo-button,
 .qollo-button-main, .footer .footer-section {
   font-weight: 700; }
 
@@ -7184,6 +7213,10 @@ i span {
   position: relative;
   top: -5px;
   right: -2px; }
+i.text {
+  font-size: inherit;
+  font-style: normal;
+  position: inherit; }
 
 /************************************/
 /** Spinner                        **/
@@ -7215,6 +7248,13 @@ i span {
     margin: auto;
     position: absolute;
     top: 35%;
+    bottom: 0;
+    left: 0;
+    right: 0; }
+  .spinner.center-top {
+    margin: auto;
+    position: absolute;
+    top: 10%;
     bottom: 0;
     left: 0;
     right: 0; }
@@ -7414,6 +7454,11 @@ div.people-list {
       position: relative;
       top: -5px;
       border-radius: 2px; }
+      div.people-list label i.text {
+        padding: none; }
+      div.people-list label i.secondary, div.people-list label .qollo-input-row i.qollo-button, .qollo-input-row div.people-list label i.qollo-button {
+        color: #00904B;
+        background-color: #FFFFFF; }
     div.people-list label.selected {
       background-color: #4d4d4d; }
       div.people-list label.selected i {

@@ -1,5 +1,8 @@
 qolloApp.factory('AuthService', function($http, $q) {
 
+    /**
+     * Attempts to authenticate the user with the stored authentication data
+     */
     var authenticate = function() {
         var deferred = $q.defer();
 
@@ -16,6 +19,9 @@ qolloApp.factory('AuthService', function($http, $q) {
         return deferred.promise;
     };
 
+    /**
+     * Attempts to log in with credentials
+     */
     var login = function(user) {
         var deferred = $q.defer();
 
@@ -32,12 +38,18 @@ qolloApp.factory('AuthService', function($http, $q) {
         return deferred.promise;
     };
 
+    /**
+     * Destroys the stored authentication data
+     */
     var logout = function() {
         window.localStorage.setItem("tokenPublic", "");
         window.localStorage.setItem("tokenPrivate", "");
         window.localStorage.setItem("userId", "");
     };
 
+    /**
+     * Attempts to register the user with credentials
+     */
     var register = function(user) {
         var deferred = $q.defer();
 
@@ -65,6 +77,9 @@ qolloApp.factory('AuthService', function($http, $q) {
 
 qolloApp.factory('UserService', function($http, $q) {
 
+    /**
+     * Gathers user data for the profile view
+     */
     var getProfile = function() {
         var deferred = $q.defer();
 
@@ -81,6 +96,9 @@ qolloApp.factory('UserService', function($http, $q) {
         return deferred.promise;
     };
 
+    /**
+     * Gathers user data for the user's phone contacts
+     */
     var getUserDetails = function(contacts) {
         var promises = [];
 
@@ -101,6 +119,9 @@ qolloApp.factory('UserService', function($http, $q) {
 
 qolloApp.factory('ContactService', function($http, $q, $rootScope) {
 
+    /**
+     * Reads the user's phone contacts
+     */
     var getContacts = function() {
         var deferred = $q.defer();
 
@@ -123,7 +144,6 @@ qolloApp.factory('ContactService', function($http, $q, $rootScope) {
                     }
                 }
             }
-            //log("[SUCCESS] getContacts: {0}", filteredContacts);
             deferred.resolve(filteredContacts);
             $rootScope.$apply();
         };
@@ -143,36 +163,55 @@ qolloApp.factory('ContactService', function($http, $q, $rootScope) {
     };
 });
 
-qolloApp.factory('DatabaseService', function($http, $q) {
+qolloApp.factory('DatabaseService', function($http, $q, $rootScope) {
 
     var cache = {};
 
+    /**
+     * Creates a connection to the local database
+     */
     var getConnection = function() {
    		return window.openDatabase("openqollo", "1.0", "OpenQollo DB", 1000000);
     };
 
+    var wrapInt = function(val) {
+        if (exists(val)) {
+            return val;
+        }
+        return "NULL";
+    };
+
+    var wrapString = function(val) {
+        if (exists(val)) {
+            return "\"" + val + "\"";
+        }
+        return "NULL";
+    };
+
+    /**
+     * Stores a collection of user detail promises to the local database
+     */
     var storeContactPromises = function(contactPromises) {
         var deferred = $q.defer();
 
         for (var i = 0; i < contactPromises.length; i++) {
             var contactPromise = contactPromises[i];
-            //log("storeContactPromise: {0}", contactPromise);
             if (exists(contactPromise)) {
                 var contactData = contactPromise.data;
                 if (exists(contactData)) {
-                    var dataSuccess = contactData["success"];
-                    var dataErrors = contactData["errors"];
+                    var dataSuccess = contactData.success;
+                    var dataErrors = contactData.errors;
 
                     if (exists(dataSuccess)) {
-                        //log("storeContactPromise-success: {0}", dataSuccess);
+                        log("[SUCCESS] storeContactPromises: {0} contacts", dataSuccess.length);
                         storeContacts(dataSuccess);
                     }
                     else if (exists(dataErrors)) {
-                        //log("storeContactPromise-error: {0}", dataErrors);
+                        log("[ERROR] storeContactPromises: {0}", dataErrors);
                         deferred.reject(dataErrors);
                     }
                     else {
-                        //log("storeContactPromise-error: No promise data retrieved");
+                        log("[ERROR] storeContactPromises: no data returned");
                         deferred.reject("Failed to retrieve promise data");
                     }
                 }
@@ -183,7 +222,11 @@ qolloApp.factory('DatabaseService', function($http, $q) {
         return deferred.promise;
     };
 
+    /**
+     * Stores the user's phone contacts and user details to the local database
+     */
     var storeContacts = function(contacts) {
+
         var wrapInt = function(val) {
             if (exists(val)) {
                 return val;
@@ -199,6 +242,7 @@ qolloApp.factory('DatabaseService', function($http, $q) {
         };
 
         var store = function(transaction) {
+            //transaction.executeSql('drop table contacts');
             transaction.executeSql(
                 'create table if not exists contacts ' + //
                 '(qolloId integer primary key autoincrement, ' + //
@@ -212,21 +256,21 @@ qolloApp.factory('DatabaseService', function($http, $q) {
             );
             for (var i = 0; i < contacts.length; i++) {
                 var contact = contacts[i];
-                //log("storing {0}", contact);
                 var sql =   "insert or replace into contacts " + //
                             "(contactId, userId, displayName, friendshipId, friendshipType, friendshipStatus, invited) " + //
                             "values (" + //
-                            [   wrapInt(contact["contactId"]),
-                                wrapInt(contact["userId"]),
-                                wrapString(contact["displayName"]),
-                                wrapInt(contact["friendshipId"]),
-                                wrapString(contact["friendshipType"]),
-                                wrapString(contact["friendshipStatus"]),
-                                "coalesce((select invited from contacts where contactId = " + contact["contactId"] + "), 0)"
+                            [   wrapInt(contact.contactId),
+                                wrapInt(contact.userId),
+                                wrapString(contact.displayName),
+                                wrapInt(contact.friendshipId),
+                                wrapString(contact.friendshipType),
+                                wrapString(contact.friendshipStatus),
+                                "coalesce((select invited from contacts where contactId = " + contact.contactId + "), 0)"
                             ].join() + //
                             ")";
                 transaction.executeSql(sql);
             }
+            log("[INFO] store: {0}", contacts.length);
         };
 
         var onStoreSuccess = function() {
@@ -240,6 +284,9 @@ qolloApp.factory('DatabaseService', function($http, $q) {
         connection.transaction(store, onStoreError, onStoreSuccess);
     };
 
+    /**
+     * Retrieves contact user data from the local database according to the contact type
+     */
     var getContactsByTypeFromDatabase = function(type) {
         var deferred = $q.defer();
 
@@ -255,16 +302,16 @@ qolloApp.factory('DatabaseService', function($http, $q) {
                 }
                 else if (type == "users") {
                     sql =   "select contactId, userId, displayName, friendshipId, friendshipType, friendshipStatus from contacts " + //
-                            "where userId is not null " + //
-                            "and friendshipStatus is not 'accepted' " + //
-                            "and (friendshipType is not 'received' " + //
-                            "or (friendshipType = 'received' and friendshipStatus is not 'accepted')) " + //
-                            "and userId is not ? " + //
+                            "where userId is not null " + // limits to registered users only
+                            "and userId is not ? " + // removes the current user in case it exists in their contacts
+                            "and (friendshipId is null " + // limits to users who have no friendship
+                            "or (friendshipType = 'sent' and friendshipStatus is not 'accepted') " + // limits to non-accepted sent requests
+                            "or (friendshipType = 'received' and friendshipStatus in ('denied', 'ended'))) " + // limits to ended or denied received requests
                             "order by displayName";
                     params.push(window.localStorage.getItem("userId"));
                 }
                 else if (type == "contacts") {
-                    sql =   "select contactId, displayName from contacts " + //
+                    sql =   "select contactId, displayName, invited from contacts " + //
                             "where userId is null " + //
                             "order by displayName";
                 }
@@ -280,6 +327,10 @@ qolloApp.factory('DatabaseService', function($http, $q) {
                         for (var i = 0; i < results.rows.length; i++) {
                             var contact = results.rows.item(i);
                             contacts.push(contact);
+
+                            if (type == "users") {
+                                log("return {0}", contact);
+                            }
                         }
                         deferred.resolve(contacts);
                     },
@@ -297,6 +348,9 @@ qolloApp.factory('DatabaseService', function($http, $q) {
         return deferred.promise;
     };
 
+    /**
+     * Retrieves contact user data from the cache first, and then from the database according to the contact type
+     */
     var getContactsByType = function(type) {
         var cachedValues = cache[type];
         if (exists(cachedValues)) {
@@ -308,8 +362,166 @@ qolloApp.factory('DatabaseService', function($http, $q) {
         return cache[type];
     };
 
+
+    var resetContactCache = function(type) {
+        cache[type] = null;
+    };
+
+    /**
+     * Updates the status of the contact
+     */
+    var updateContactStatus = function(contact, status) {
+        updateContactsStatus([contact], status);
+    };
+
+    /**
+     * Updates the status of a list of contacts
+     */
+    var updateContactsStatus = function(contacts, status) {
+
+        var updateStatus = function(transaction) {
+            for (var i = 0; i < contacts.length; i++) {
+                var contact = contacts[i];
+
+                var sql = null;
+                var params = [contact.contactId];
+
+                if (status == "invited") {
+                    sql =   "update contacts " + //
+                            "set invited = 1 " + //
+                            "where contactId = ?";
+                }
+                else if (status == "new") {
+                    sql =   "update contacts " + //
+                            "set friendshipStatus = 'new', " + //
+                            "friendshipType = 'sent' " + //
+                            "where contactId = ?";
+                }
+                else if (status == "ended") {
+                    sql =   "update contacts " + //
+                            "set friendshipStatus = 'ended', " + //
+                            "friendshipType = NULL " + //
+                            "where contactId = ?";
+                }
+                else if (status == "denied") {
+                    sql =   "update contacts " + //
+                            "set friendshipStatus = 'denied' " + //
+                            "where contactId = ?";
+                }
+                else if (status == "accepted") {
+                    sql =   "update contacts " + //
+                            "set friendshipStatus = 'accepted' " + //
+                            "where contactId = ?";
+                }
+                else {
+                    throw "Friendship status " + status + " is invalid";
+                }
+
+                transaction.executeSql(sql, params);
+            }
+        };
+
+        var updateStatusSuccess = function() {
+        };
+
+        var updateStatusError = function(updateError) {
+            log("[ERROR] updateStatus: {0}", updateError);
+        };
+
+        getConnection().transaction(updateStatus, updateStatusError, updateStatusSuccess);
+    };
+
+    var attachContactData = function(contacts) {
+        var deferred = $q.defer();
+
+        var connection = getConnection();
+        connection.transaction(
+            function(transaction) {
+                var userIds = getObjectValues(contacts, "userId");
+                var params = fillArray("?", userIds.length).toString();
+                var sql = "select userId, displayName from contacts " + //
+                            "where userId in (" + params + ")";
+                transaction.executeSql(sql, userIds,
+                    function(transaction, results) {
+                        for (var i = 0; i < results.rows.length; i++) {
+                            var user = results.rows.item(i);
+                            for (var j = 0; j < contacts.length; j++) {
+                                var contact = contacts[j];
+                                if (user.userId == contact.userId) {
+                                    contact.displayName = user.displayName;
+                                    break;
+                                }
+                            }
+                        }
+                        deferred.resolve(contacts);
+                    },
+                    function(transaction, error) {
+                        log("[ERROR] attachContactData: {0}", error);
+                        deferred.reject(error);
+                    }
+                );
+            },
+            function(error) {
+                log("[ERROR] attachContactData: {0}", error);
+                deferred.reject(error);
+            }
+        );
+
+        return deferred.promise;
+    };
+
     return {
         storeContactPromises : storeContactPromises,
-        getContactsByType : getContactsByType
+        getContactsByType : getContactsByType,
+        resetContactCache : resetContactCache,
+        updateContactStatus : updateContactStatus,
+        updateContactsStatus : updateContactsStatus,
+        attachContactData : attachContactData
+    };
+});
+
+qolloApp.factory('FriendService', function($http, $q, $rootScope) {
+
+    var updateStatus = function(contacts, status) {
+        var deferred = $q.defer();
+
+        if (status != "invited") {
+            var data = { contacts : contacts, status : status };
+            $http.post('http://qollo.alanbuttars.com/server/rest/friendship-update-status.php', data)
+            .success(function(data) {
+                log("[SUCCESS] updateStatus: {0}", data);
+                deferred.resolve(data);
+            })
+            .error(function(error) {
+                log("[ERROR] updateStatus: {0}", error);
+                deferred.reject(error);
+            });
+        }
+        else {
+            deferred.resolve({success : true});
+        }
+
+        return deferred.promise;
+    };
+
+    var getFriendshipNotifications = function() {
+        var deferred = $q.defer();
+
+        $http.post('http://qollo.alanbuttars.com/server/rest/friendship-notifications.php', null)
+        .success(function(data) {
+            log("[SUCCESS] getFriendshipNotifications: {0}", data);
+            deferred.resolve(data);
+        })
+        .error(function(error) {
+            log("[ERROR] getFriendshipNotifications: {0}", error);
+            deferred.reject(error);
+        });
+
+        return deferred.promise;
+    };
+
+    return {
+        updateStatus : updateStatus,
+        getFriendshipNotifications : getFriendshipNotifications
     };
 });

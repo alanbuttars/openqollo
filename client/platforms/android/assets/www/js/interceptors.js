@@ -17,9 +17,9 @@ qolloApp.factory('qolloInterceptor', ['$injector', '$q', '$rootScope',
         var response = function(response) {
             if (exists(response["data"])) {
                 if (exists(response["data"]["filter"])) {
-                    log("Interceptor {0}", JSON.stringify(response["filter"]));
-                    $injector.get('$state').transitionTo('login');
-                    return $q.reject(response);
+                    log("[ERROR] Interceptor {0}", response["data"]["filter"]);
+                    //$injector.get('$state').transitionTo('login');
+                    //return $q.reject(response);
                 }
             }
             return response;

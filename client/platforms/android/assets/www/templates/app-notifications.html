@@ -1,5 +1,15 @@
 <div class="row">
     <div class="small-12 columns">
-        <h1>I am the notifications view</h1>
+        <h4 class="uppercase bolded">Friendship notifications</h4>
     </div>
+</div>
+<div class="spinner center" ng-if="friendships.loading"></div>
+<div class="people-list">
+    <label
+            ng-repeat="friendship in friendships.data | orderBy:'displayName'"
+            for="{{friendship.contactId}}">
+        {{friendship.displayName}}
+        <i class="text secondary" ng-click="updateStatus($index, 'denied')"><span>No</span></i>
+        <i class="text" ng-click="updateStatus($index, 'accepted')"><span>Yes</span></i>
+    </label>
 </div>
