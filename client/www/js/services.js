@@ -270,7 +270,6 @@ qolloApp.factory('DatabaseService', function($http, $q, $rootScope) {
                             ")";
                 transaction.executeSql(sql);
             }
-            log("[INFO] store: {0}", contacts.length);
         };
 
         var onStoreSuccess = function() {
@@ -327,10 +326,6 @@ qolloApp.factory('DatabaseService', function($http, $q, $rootScope) {
                         for (var i = 0; i < results.rows.length; i++) {
                             var contact = results.rows.item(i);
                             contacts.push(contact);
-
-                            if (type == "users") {
-                                log("return {0}", contact);
-                            }
                         }
                         deferred.resolve(contacts);
                     },
@@ -364,6 +359,7 @@ qolloApp.factory('DatabaseService', function($http, $q, $rootScope) {
 
 
     var resetContactCache = function(type) {
+        log("[SUCCESS] resetContactCache: {0}", type);
         cache[type] = null;
     };
 
@@ -406,12 +402,14 @@ qolloApp.factory('DatabaseService', function($http, $q, $rootScope) {
                 else if (status == "denied") {
                     sql =   "update contacts " + //
                             "set friendshipStatus = 'denied' " + //
-                            "where contactId = ?";
+                            "where userId = ?";
+                    params = [contact.userId];
                 }
                 else if (status == "accepted") {
                     sql =   "update contacts " + //
                             "set friendshipStatus = 'accepted' " + //
-                            "where contactId = ?";
+                            "where userId = ?";
+                    params = [contact.userId];
                 }
                 else {
                     throw "Friendship status " + status + " is invalid";
@@ -421,7 +419,8 @@ qolloApp.factory('DatabaseService', function($http, $q, $rootScope) {
             }
         };
 
-        var updateStatusSuccess = function() {
+        var updateStatusSuccess = function(transaction, error) {
+            log("[SUCCESS] updateStatus");
         };
 
         var updateStatusError = function(updateError) {

@@ -318,8 +318,10 @@ qolloControllers.controller('PeopleCtrl', ['DatabaseService', 'FriendService', '
 						DatabaseService.updateContactsStatus($scope.contactsSelected, status);
 						$scope.confirmMessage = "Success!";
 						$timeout(function() {
-							//$scope.updateContactsStatusOnUi(status);
 							DatabaseService.resetContactCache($state.current.contactType);
+							if ($state.current.contactType == "friends") {
+								DatabaseService.resetContactCache("users");
+							}
 							$scope.closeModal();
 							$scope.confirmMessage = null;
 							$scope.onload();
