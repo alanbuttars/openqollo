@@ -180,15 +180,18 @@ function attachFriendDataToContacts($userId, $contacts) {
 			$sentFriendshipId = $sentStatusInfo["friendshipId"];
 			$receivedFriendshipId = $receivedStatusInfo["friendshipId"];
 			
-			if ($sentFriendshipId > $receivedFriendshipId) {
+			$sentTime = $sentStatusInfo["timeUpdated"];
+			$receivedTime = $receivedStatusInfo["timeUpdated"];
+			
+			if ($sentTime > $receivedTime) {
 				$contact["friendshipId"] = $sentFriendshipId;
 				$contact["friendshipType"] = "sent";
 				$contact["friendshipStatus"] = $sentStatusInfo["status"];
 			}
 			else {
-				$contact["friendship_id"] = $receivedFriendshipId;
-				$contact["friendship_type"] = "received";
-				$contact["friendship_status"] = $receivedStatusInfo["status"];
+				$contact["friendshipId"] = $receivedFriendshipId;
+				$contact["friendshipType"] = "received";
+				$contact["friendshipStatus"] = $receivedStatusInfo["status"];
 			}
 		}
 		else if (isset($sent[$contactUserId])) {

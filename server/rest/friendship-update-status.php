@@ -12,7 +12,7 @@ try {
 	$response = updateFriendshipStatuses($userId, $contacts, $status);
 }
 catch (Exception $e) {
-	$response = array("errors" => $e);
+	$response = array("errors" => $e->errorInfo[2]);
 }
 sendResponse($response);
 ?>
