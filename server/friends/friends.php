@@ -179,7 +179,7 @@ function updateNonexistingFriendshipStatuses($userId, $friendUserIds) {
 		$stmt = $conn->prepare($sql);
 		$i = 1;
 		foreach ($friendUserIds as $friendUserId) {
-			$encryptionKey = generateRandomString(128);
+			$encryptionKey = generateRandomString(32);
 			$stmt->bindValue($i++, $userId, PDO::PARAM_INT);
 			$stmt->bindValue($i++, $friendUserId, PDO::PARAM_INT);
 			$stmt->bindValue($i++, $encryptionKey, PDO::PARAM_STR);
