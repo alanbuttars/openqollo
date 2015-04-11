@@ -134,6 +134,11 @@ $qollo-xxxlarge: $h0-font-size !default;
     width: 100%;
 }
 
+.full {
+    height: 100%;
+    width: 100%;
+}
+
 i {
     span {
         font-size: $qollo-xxsmall;
@@ -422,14 +427,23 @@ ul.link-list {
     width: 100%;
 }
 
-.profile-container {
+.icon-container-wrapper {
     @include circle(200px, $qollo-gray-light);
     @extend .horizontal-middle;
 
-    .profile {
+    .icon-container {
         @extend .text-center;
         color: $black;
         font-size: 140px;
+
+    }
+
+    &.green {
+        @include circle(200px, $qollo-green);
+
+        .icon-container {
+            color: $white;
+        }
     }
 }
 

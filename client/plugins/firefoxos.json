@@ -11,6 +11,14 @@
                         {
                             "xml": "<permission access=\"readwrite\" description=\"Required for accessing address book.\" name=\"contacts\" privileged=\"true\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Camera\"><param name=\"firefoxos-package\" value=\"Camera\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<permission name=\"systemXHR\" privileged=\"true\" />",
+                            "count": 1
                         }
                     ]
                 }
@@ -22,6 +30,15 @@
             "PACKAGE_NAME": "com.alanbuttars.qollo"
         },
         "org.apache.cordova.contacts": {
+            "PACKAGE_NAME": "com.alanbuttars.qollo"
+        },
+        "org.apache.cordova.camera": {
+            "PACKAGE_NAME": "com.alanbuttars.qollo"
+        },
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "com.alanbuttars.qollo"
+        },
+        "org.apache.cordova.file-transfer": {
             "PACKAGE_NAME": "com.alanbuttars.qollo"
         }
     },

@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="message center">{{message}}</div>
+    <div class="spinner center" ng-if="loading"></div>
+    <div class="people-list">
+        <label
+                ng-class="contact.selected ? 'selected' : ''"
+                ng-repeat="contact in contacts | filter:root.query | orderBy:'displayName'"
+                for="{{contact.contactId}}">
+            {{contact.displayName}}
+            <input id="{{contact.contactId}}" type="checkbox"
+                   ng-model="contact.selected"
+                   ng-change="select(contacts.indexOf(contact))"/>
+            <i class="fi-share"></i>
+        </label>
+    </div>
+</div>
+<div class="footer" ng-show="contactsSelected.length">
+    <a class="footer-section" ng-click="cancel()">
+        Cancel
+    </a>
+    <a class="footer-section" ng-click="openModal()">
+        Send ({{contactsSelected.length}})
+    </a>
+</div>
+
+<div id="modal-people" class="reveal-modal collapse" data-reveal>
+    <div class="modal-header">
+        <h2>Confirm</h2>
+        <a class="close-reveal-modal">&#215;</a>
+    </div>
+    <div class="modal-header" ng-show="confirmMessage" ng-class="confirmMessage == 'Success!' ? 'success' : 'error'">
+        <h2>{{confirmMessage}}</h2>
+    </div>
+    <div class="modal-content" ng-class="confirmMessage ? 'has-subheader' : ''">
+        <div class="row">
+            <div class="small-12 columns">
+                <p class="bolded">Send to the following contacts ({{contactsSelected.length}})?</p>
+
+                <ul class="people-list" ng-if="!confirmLoading">
+                    <li ng-repeat="contact in contactsSelected | orderBy:'displayName'">{{contact.displayName}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div ng-if="confirmLoading" class="spinner center-top"></div>
+    <div class="modal-footer">
+        <a href="#" class="qollo-button right" ng-click="send()">Send</a>
+    </div>
+</div>

@@ -524,3 +524,115 @@ qolloApp.factory('FriendService', function($http, $q, $rootScope) {
         getFriendshipNotifications : getFriendshipNotifications
     };
 });
+
+qolloApp.factory('ImageService', function($http, $q) {
+
+    var image = null;
+
+    var setImage = function(img) {
+        image = img;
+    };
+
+    var getImage = function() {
+        return image;
+    };
+
+    var getCamera = function() {
+        var deferred = $q.defer();
+
+		var cameraOptions = {
+			sourceType : Camera.PictureSourceType.CAMERA,
+			destinationType : Camera.DestinationType.FILE_URI,
+			encodingType: Camera.EncodingType.JPEG,
+			allowEdit : false,
+			saveToPhotoAlbum : false,
+			quality: 25
+		};
+
+		navigator.camera.getPicture(
+		    function(imageUri) {
+		        log("[SUCCESS] getCamera: {0}", imageUri);
+		        deferred.resolve(imageUri);
+		    },
+		    function(message) {
+		        log("[ERROR] getCamera: {0}", message);
+		        deferred.reject(message);
+		    },
+		    cameraOptions);
+
+		return deferred.promise;
+	};
+
+	var getAlbum = function() {
+	    var deferred = $q.defer();
+
+	    var albumOptions = {
+			sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
+			destinationType : Camera.DestinationType.FILE_URL,
+			encodingType: Camera.EncodingType.JPEG,
+			allowEdit : false,
+			saveToPhotoAlbum : false,
+			quality: 25,
+			mediaType : Camera.MediaType.ALLMEDIA
+		};
+
+		navigator.camera.getPicture(
+		    function(imageUri) {
+                log("[SUCCESS] getAlbum: {0}", imageUri);
+		        deferred.resolve(imageUri);
+		    },
+		    function(message) {
+		        log("[ERROR] getAlbum: {0}", message);
+		        deferred.reject(message);
+		    },
+		    albumOptions);
+
+		return deferred.promise;
+	};
+
+	var sendImage = function(userIds) {
+	    var deferred = $q.defer();
+
+	    var options = {
+	        fileKey : 'file',
+	        fileName : 'file.jpg',
+	        mimeType : 'image/jpeg',
+	        chunkedMode : false,
+	        params : {
+	            'userIds' : userIds
+	        },
+	        headers : getHttpHeaders()
+	    }
+
+        var fileTransfer = new FileTransfer();
+        fileTransfer.upload(
+            image,
+            "http://qollo.alanbuttars.com/server/rest/image-upload.php",
+            function(data) {
+                if (exists(data.response)) {
+                    var response = JSON.parse(data.response);
+                    log("[SUCCESS] sendImage: {0}", response);
+                    deferred.resolve(response);
+                }
+                else {
+                    log("[ERROR] sendImage: {0}", data);
+                    deferred.reject(data);
+                }
+            },
+            function(error) {
+                log("[ERROR] sendImage: {0}", error);
+            }, options);
+
+        return deferred.promise;
+
+	};
+
+    return {
+        getImage : getImage,
+        setImage : setImage,
+        getCamera : getCamera,
+        getAlbum : getAlbum,
+        sendImage : sendImage
+    }
+
+});

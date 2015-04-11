@@ -2,7 +2,7 @@
 
 var qolloApp = angular.module('qolloApp', [ 'ui.router', 'qolloControllers' ]);
 
-qolloApp.config(function($stateProvider, $urlRouterProvider) {
+qolloApp.config(function($stateProvider, $urlRouterProvider, $compileProvider) {
 
     $stateProvider
 
@@ -91,16 +91,30 @@ qolloApp.config(function($stateProvider, $urlRouterProvider) {
 		title : 'Info',
 		icon : 'fi-info'
 	})
-
-	/* Other states */
-	.state('camera', {
-    	url : '/camera',
-    	templateUrl : 'templates/camera.html'
+	.state('menu.share', {
+		url : '/send',
+		templateUrl : 'templates/menu-share.html',
+		controller : 'FriendsCtrl',
+		title : 'Share',
+		icon : 'fi-share',
+		contactType : 'friends',
+		messageEmpty : 'You have 0 friend on OpenQollo'
+	})
+	.state('menu.take', {
+    	url : '/take',
+    	templateUrl : 'templates/menu-take.html',
+    	controller : 'TakeCtrl',
+    	title : 'Take',
+    	icon : 'fi-camera',
    	});
+
 
 	$urlRouterProvider.when('/app/people', '/app/people/friends');
 
 	$urlRouterProvider.otherwise('/splash');
+
+	$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|content|file):/);
+
 
 });
 

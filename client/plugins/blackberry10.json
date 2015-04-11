@@ -19,11 +19,31 @@
                         {
                             "xml": "<feature name=\"Contacts\" value=\"Contacts\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Camera\" value=\"Camera\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"File\" value=\"File\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"FileTransfer\" value=\"FileTransfer\" />",
+                            "count": 1
                         }
                     ],
                     "/widget/rim:permissions": [
                         {
                             "xml": "<rim:permit>access_pimdomain_contacts</rim:permit>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<rim:permit>access_shared</rim:permit>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<rim:permit>use_camera</rim:permit>",
                             "count": 1
                         }
                     ]
@@ -36,6 +56,15 @@
             "PACKAGE_NAME": "com.alanbuttars.qollo"
         },
         "org.apache.cordova.contacts": {
+            "PACKAGE_NAME": "com.alanbuttars.qollo"
+        },
+        "org.apache.cordova.camera": {
+            "PACKAGE_NAME": "com.alanbuttars.qollo"
+        },
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "com.alanbuttars.qollo"
+        },
+        "org.apache.cordova.file-transfer": {
             "PACKAGE_NAME": "com.alanbuttars.qollo"
         }
     },

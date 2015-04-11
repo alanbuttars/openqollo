@@ -204,5 +204,19 @@ function unfreeze(object) {
 }
 
 /************************************/
-/** Object functions               **/
+/** HTTP functions               **/
 /************************************/
+
+function getHttpHeaders() {
+    var tokenPublic = window.localStorage.getItem('tokenPublic');
+    var tokenPrivate = window.localStorage.getItem('tokenPrivate');
+    var timestamp = Date.now();
+    var hashObject = CryptoJS.SHA256(tokenPrivate + "" + timestamp);
+    var hash = hashObject.toString(CryptoJS.enc.Base64);
+
+    return {
+        'Tokenpublic' : tokenPublic,
+        'Hash' : hash,
+        'Timestamp' : timestamp
+    };
+}

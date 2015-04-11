@@ -386,11 +386,43 @@ qolloControllers.controller('PeopleCtrl', ['DatabaseService', 'FriendService', '
 
 }]);
 
-qolloControllers.controller('FriendsCtrl', ['DatabaseService', '$controller', '$rootScope', '$scope', '$state', '$timeout',
-	function(DatabaseService, $controller, $rootScope, $scope, $state, $timeout) {
+qolloControllers.controller('FriendsCtrl', ['DatabaseService', 'ImageService', '$controller', '$rootScope', '$scope', '$state', '$timeout',
+	function(DatabaseService, ImageService, $controller, $rootScope, $scope, $state, $timeout) {
 		$controller('PeopleCtrl', {DatabaseService : DatabaseService, $rootScope : $rootScope, $scope : $scope, $state : $state, $timeout : $timeout});
 
 		$scope.onload();
+
+		$scope.send = function() {
+			$scope.confirmLoading = true;
+			$scope.confirmMessage = null;
+			var contactsSelectedIds = getObjectValues($scope.contactsSelected, "userId");
+			ImageService.sendImage(contactsSelectedIds).then(
+				function(data) {
+					$scope.confirmLoading = false;
+					var successInfo = data.success;
+					var errorInfo = data.errors;
+
+					if (exists(successInfo)) {
+						$scope.confirmMessage = "Success!";
+						$timeout(function() {
+							$scope.closeModal();
+							$scope.confirmMessage = null;
+							$scope.onload();
+						}, 300);
+					}
+					else if (exists(errorInfo)) {
+						$scope.confirmMessage = errorInfo;
+					}
+					else {
+						$scope.confirmMessage = "Failed to contact the server";
+					}
+				},
+				function(error) {
+					$scope.confirmLoading = false;
+					$scope.confirmMessage = "Failed to contact the server";
+				}
+			)
+		};
 
 }]);
 
@@ -407,5 +439,42 @@ qolloControllers.controller('ContactsCtrl', ['DatabaseService', '$controller', '
 		$controller('PeopleCtrl', {DatabaseService : DatabaseService, $rootScope : $rootScope, $scope : $scope, $state : $state, $timeout : $timeout});
 
 		$scope.onload();
+
+}]);
+
+qolloControllers.controller('TakeCtrl', ['ImageService', '$scope', '$state',
+	function(ImageService, $scope, $state) {
+
+		$scope.image = ImageService.getImage();
+
+		$scope.takePicture = function(type) {
+			var promise = null;
+			if (type == "camera") {
+				promise = ImageService.getCamera();
+			}
+			else {
+				promise = ImageService.getAlbum();
+			}
+			startLoading();
+			promise.then(
+				function(imageUri) {
+					$scope.image = imageUri;
+					stopLoading();
+				},
+				function(error) {
+					$scope.image = null;
+					stopLoading();
+				});
+		};
+
+		$scope.send = function() {
+			ImageService.setImage($scope.image);
+			$state.go('menu.share');
+		};
+
+		$scope.cancel = function() {
+			navigator.camera.cleanup();
+			$scope.image = null;
+		};
 
 }]);

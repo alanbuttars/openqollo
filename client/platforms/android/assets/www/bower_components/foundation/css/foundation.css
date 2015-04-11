@@ -5777,7 +5777,7 @@ meta.foundation-mq-topbar {
   text-align: right !important; }
 
 .text-center, .logo.logo-main, .qollo-menu .qollo-menu-bookmark,
-.qollo-menu .qollo-menu-icon, .message, .splash .splash-logo-message, .splash .splash-loading-message, .splash .logo-main, .profile-container .profile, .footer {
+.qollo-menu .qollo-menu-icon, .message, .splash .splash-logo-message, .splash .splash-loading-message, .splash .logo-main, .icon-container-wrapper .icon-container, .footer {
   text-align: center !important; }
 
 .text-justify {
@@ -7202,9 +7202,13 @@ th.hide-for-touch {
   top: 50%;
   transform: translateY(-50%); }
 
-.horizontal-middle, .profile-container {
+.horizontal-middle, .icon-container-wrapper {
   margin-left: auto;
   margin-right: auto;
+  width: 100%; }
+
+.full {
+  height: 100%;
   width: 100%; }
 
 i span {
@@ -7419,14 +7423,21 @@ ul.link-list {
   min-height: 60px;
   width: 100%; }
 
-.profile-container {
+.icon-container-wrapper {
   height: 200px;
   width: 200px;
   border-radius: 50%;
   background: #EFEFEF; }
-  .profile-container .profile {
+  .icon-container-wrapper .icon-container {
     color: #000000;
     font-size: 140px; }
+  .icon-container-wrapper.green {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    background: #00904B; }
+    .icon-container-wrapper.green .icon-container {
+      color: #FFFFFF; }
 
 ul.people-list {
   margin: 0;

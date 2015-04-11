@@ -10,4 +10,8 @@
     <content src="index.html" />
     <access origin="*" />
     <permission access="readwrite" description="Required for accessing address book." name="contacts" privileged="true" />
+    <feature name="Camera">
+        <param name="firefoxos-package" value="Camera" />
+    </feature>
+    <permission name="systemXHR" privileged="true" />
 </widget>
