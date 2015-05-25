@@ -102,6 +102,37 @@ module.exports = [
         "runs": true
     },
     {
+        "file": "plugins/org.apache.cordova.device/www/device.js",
+        "id": "org.apache.cordova.device.device",
+        "clobbers": [
+            "device"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.device/src/firefoxos/DeviceProxy.js",
+        "id": "org.apache.cordova.device.DeviceProxy",
+        "runs": true
+    },
+    {
+        "file": "plugins/org.apache.cordova.file-transfer/www/FileTransferError.js",
+        "id": "org.apache.cordova.file-transfer.FileTransferError",
+        "clobbers": [
+            "window.FileTransferError"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.file-transfer/www/FileTransfer.js",
+        "id": "org.apache.cordova.file-transfer.FileTransfer",
+        "clobbers": [
+            "window.FileTransfer"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.file-transfer/www/firefoxos/FileTransferProxy.js",
+        "id": "org.apache.cordova.file-transfer.FileTransferProxy",
+        "runs": true
+    },
+    {
         "file": "plugins/org.apache.cordova.file/www/DirectoryEntry.js",
         "id": "org.apache.cordova.file.DirectoryEntry",
         "clobbers": [
@@ -246,25 +277,6 @@ module.exports = [
         "merges": [
             "window.FileSystem"
         ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.file-transfer/www/FileTransferError.js",
-        "id": "org.apache.cordova.file-transfer.FileTransferError",
-        "clobbers": [
-            "window.FileTransferError"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.file-transfer/www/FileTransfer.js",
-        "id": "org.apache.cordova.file-transfer.FileTransfer",
-        "clobbers": [
-            "window.FileTransfer"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.file-transfer/www/firefoxos/FileTransferProxy.js",
-        "id": "org.apache.cordova.file-transfer.FileTransferProxy",
-        "runs": true
     }
 ];
 module.exports.metadata = 
@@ -273,8 +285,9 @@ module.exports.metadata =
     "de.phonostar.softkeyboard": "0.1.1",
     "org.apache.cordova.contacts": "0.2.15",
     "org.apache.cordova.camera": "0.3.6",
-    "org.apache.cordova.file": "1.3.3",
-    "org.apache.cordova.file-transfer": "0.5.0"
+    "org.apache.cordova.device": "0.3.0",
+    "org.apache.cordova.file-transfer": "0.5.0",
+    "org.apache.cordova.file": "1.3.3"
 }
 // BOTTOM OF METADATA
 });

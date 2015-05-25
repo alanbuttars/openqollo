@@ -13,3 +13,19 @@
         <i class="text" ng-click="updateStatus($index, 'accepted')"><span>Yes</span></i>
     </label>
 </div>
+
+<div class="row">
+    <div class="small-12 columns">
+        <h4 class="uppercase bolded">Images</h4>
+    </div>
+</div>
+<div class="spinner center" ng-if="images.loading"></div>
+
+<div class="image-list">
+    <div class="image-list-item" ng-repeat="image in images.data">
+        <div class="image-tag" ng-class="image.type == 'sent' ? 'right' : 'left'">
+            <div>{{image.displayName}}</div>
+        </div>
+        <img ng-src="{{image.src}}" />
+    </div>
+</div>

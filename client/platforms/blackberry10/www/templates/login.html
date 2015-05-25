@@ -1,0 +1,51 @@
+<div class="logo logo-main">
+    <span>Open</span>
+    <span>Qollo</span>
+</div>
+
+<div class="row margin-top-xxlarge">
+    <div class="small-12 medium-8 medium-offset-2 large-6 large-offset-3 columns end">
+        <small class="error" ng-show="errors.server">{{errors.server}}</small>
+
+        <div class="row qollo-input-row collapse" ng-class="errors.email ? 'error' : ''">
+            <div class="small-2 columns">
+                <div class="qollo-button" ng-class="errors.email ? 'error' : ''">
+                    <i class="fi-mail"></i>
+                </div>
+            </div>
+            <div class="small-10 columns">
+                <input type="text" ng-model="user.email" placeholder="Email"
+                       maxlength="64"
+                       focus-directive/>
+                <small class="error" ng-show="errors.email">{{errors.email}}</small>
+            </div>
+        </div>
+
+        <div class="row qollo-input-row collapse" ng-class="errors.password ? 'error' : ''">
+            <div class="small-2 columns">
+                <div class="qollo-button" ng-class="errors.password ? 'error' : ''">
+                    <i class="fi-lock"></i>
+                </div>
+            </div>
+            <div class="small-10 columns">
+                <input type="password" ng-model="user.password" placeholder="Password"
+                       maxlength="64" focus-directive/>
+                <small class="error" ng-show="errors.password">{{errors.password}}</small>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="small-12 columns">
+                <div class="qollo-button-main" ng-click="login()">Login</div>
+            </div>
+        </div>
+        <ul class="link-list">
+            <li>
+                <a ui-sref="forgot">Forgot</a>
+            </li>
+            <li>
+                <a ui-sref="register">Register</a>
+            </li>
+        </ul>
+    </div>
+</div>

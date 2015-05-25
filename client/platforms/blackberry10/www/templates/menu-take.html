@@ -1,0 +1,26 @@
+<div class="container">
+    <img ng-show="image" class="full" ng-src="{{image}}" />
+
+    <div ng-show="!image">
+
+        <div class="icon-container-wrapper green margin-top-xlarge" ng-click="takePicture('camera')">
+            <div class="icon-container">
+                <i class="fi-camera"></i>
+            </div>
+        </div>
+
+        <div class="icon-container-wrapper green margin-top-xlarge" ng-click="takePicture('album')">
+            <div class="icon-container">
+                <i class="fi-folder"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-show="image" class="footer">
+    <a class="footer-section" ng-click="cancel()">
+        Cancel
+    </a>
+    <a class="footer-section" ng-click="send()">
+        Send
+    </a>
+</div>

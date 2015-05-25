@@ -5,11 +5,10 @@
     ],
     "version": "0.0.1",
     "name": "OpenQollo",
-    "pkgName": "com.alanbuttars.qollo",
-    "description": "A sample Apache Cordova application that responds to the deviceready event.",
+    "description": "An open-source image-sharing application created with PhoneGap and AngularJS.",
     "developer": {
-        "name": "Apache Cordova Team",
-        "url": "http://cordova.io"
+        "name": "Alan Buttars",
+        "url": "http://alanbuttars.com"
     },
     "icons": {}
 }

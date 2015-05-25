@@ -523,3 +523,53 @@ div.people-list {
         border-right: none;
     }
 }
+
+.image-list {
+    margin: 0;
+    list-style: none;
+
+    /* Prevent vertical gaps */
+    line-height: 0;
+
+    -webkit-column-count: 1;
+    -webkit-column-gap:   0px;
+    -moz-column-count:    1;
+    -moz-column-gap:      0px;
+    column-count:         1;
+    column-gap:           0px;
+
+    .image-list-item {
+        position: relative;
+        width: 100%;
+
+        img {
+            /* Just in case there are inline attributes */
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        .image-tag {
+            position: absolute;
+            top: 20px;
+            min-width: 20%;
+            max-width: 35%;
+            opacity: 0.8;
+            padding: 20px;
+            background-color: $primary-color;
+
+            &.left {
+                left: 0px;
+                div {
+                    float: left;
+                }
+            }
+
+            &.right {
+                right: 0px;
+                div {
+                    float: right;
+                }
+            }
+        }
+    }
+}

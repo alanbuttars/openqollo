@@ -242,7 +242,6 @@ qolloApp.factory('DatabaseService', function($http, $q, $rootScope) {
         };
 
         var store = function(transaction) {
-            //transaction.executeSql('drop table contacts');
             transaction.executeSql(
                 'create table if not exists contacts ' + //
                 '(qolloId integer primary key autoincrement, ' + //
@@ -357,7 +356,9 @@ qolloApp.factory('DatabaseService', function($http, $q, $rootScope) {
         return cache[type];
     };
 
-
+    /**
+     * Invalidate the cache for the given contact type
+     */
     var resetContactCache = function(type) {
         log("[SUCCESS] resetContactCache: {0}", type);
         cache[type] = null;
@@ -451,7 +452,6 @@ qolloApp.factory('DatabaseService', function($http, $q, $rootScope) {
                                 var contact = contacts[j];
                                 if (user.userId == contact.userId) {
                                     contact.displayName = user.displayName;
-                                    break;
                                 }
                             }
                         }
@@ -606,9 +606,9 @@ qolloApp.factory('ImageService', function($http, $q) {
 	};
 
     /**
-     * Sends the currently-stored image to the given user IDs in REST.
+     * Sends the currently-stored image to the given friendship IDs in REST.
      */
-	var sendImage = function(userIds) {
+	var sendImage = function(friendshipIds) {
 	    var deferred = $q.defer();
 
 	    var options = {
@@ -617,7 +617,7 @@ qolloApp.factory('ImageService', function($http, $q) {
 	        mimeType : 'image/jpeg',
 	        chunkedMode : false,
 	        params : {
-	            'userIds' : userIds
+	            'friendshipIds' : friendshipIds
 	        },
 	        headers : getHttpHeaders()
 	    }
@@ -639,10 +639,161 @@ qolloApp.factory('ImageService', function($http, $q) {
             },
             function(error) {
                 log("[ERROR] sendImage: {0}", error);
+                deferred.reject(error);
             }, options);
 
         return deferred.promise;
+	};
 
+    /**
+     * Retrieves a sublist of the image notifications for the user.
+     */
+	var loadImages = function(startIndex, numResults) {
+        var deferred = $q.defer();
+
+        var request = {startIndex : startIndex, numResults : numResults};
+
+        $http.post('http://qollo.alanbuttars.com/server/rest/image-notifications.php', request)
+        .success(function(data) {
+            if (exists(data.errors)) {
+                log("[ERROR] loadImages: {0}", data);
+                deferred.reject(data.errors);
+            }
+            else {
+                log("[SUCCESS] loadImages: {0}", data);
+                deferred.resolve(data);
+            }
+        })
+        .error(function(error) {
+            log("[ERROR] loadImages: {0}", error);
+            deferred.reject(error);
+        });
+
+        return deferred.promise;
+	};
+
+    /**
+     * Given a collection of image information objects, attaches an image download promise to each.
+     */
+	var attachImages = function(imageInfos) {
+	    var promises = [];
+
+	    for (var i = 0; i < imageInfos.length; i++) {
+	        var imageInfo = imageInfos[i];
+	        var promise = attachDummyImage(imageInfo);
+	        //var promise = attachImage(imageInfo);
+	        promises.push(promise);
+	    }
+
+	    return $q.all(promises);
+	};
+
+	var dummyImages = [
+        "http://alanbuttars.com/img/efp.png",
+        "http://alanbuttars.com/img/korea_bw_teal.jpg",
+        "http://alanbuttars.com/img/OpenQollo_3_account.png",
+        "http://alanbuttars.com/img/ninedot.png",
+        "http://alanbuttars.com/img/comp_icon.png",
+        "http://alanbuttars.com/img/zimbabwe.png",
+	];
+
+    /**
+     * Because of a bug with PhoneGap during this section's writing, a dummy solution is written here
+     */
+	var attachDummyImage = function(imageInfo) {
+	    var deferred = $q.defer();
+
+	    var index = imageInfo.imageId % dummyImages.length;
+	    var image = dummyImages[index];
+
+	    imageInfo.src = image;
+	    deferred.resolve(imageInfo);
+
+	    return deferred.promise;
+	};
+
+    /**
+     * Attaches an image download promise to the given image information object
+     */
+	var attachImage = function(imageInfo) {
+	    var deferred = $q.defer();
+
+	    var imageId = imageInfo.imageId;
+	    var remotePath = encodeURI("http://qollo.alanbuttars.com/server/rest/image-download.php?imageId=" + imageId);
+	    var localPath = imageId + ".jpg";
+
+	    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+	        function(fileSystem) {
+	            fileSystem.root.getFile(localPath, {create : true, exclusive : false},
+
+	                function(fileEntry) {
+
+	                    /* 1. Attempt to grab the file locally, if it exists */
+	                    var getLocalFile = function(localFilePath) {
+	                        log("[INFO] attachImage({0}, local): attempt", imageId);
+	                        var reader = new FileReader();
+	                        reader.onloadend = function(event) {
+	                            if (exists(event)) {
+	                                if (exists(event.target)) {
+	                                    if (exists(event.target.result)) {
+	                                        if (event.target.result != "data:image/jpeg;base64,") {
+	                                            log("[SUCCESS] attachImage({0}, local)", imageId)
+	                                            imageInfo.src = event.target.result;
+	                                            deferred.resolve(imageInfo);
+	                                            return;
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                            log("[ERROR] attachImage({0}, local): failed", imageId);
+	                            getRemoteFile();
+	                        };
+	                        reader.readAsDataURL(localFilePath);
+	                    };
+
+                        /* 2. If the file doesn't exist locally, download it from the remote server */
+	                    var getRemoteFile = function() {
+	                        log("[INFO] attachImage({0}, remote): attempt", imageId);
+
+	                        var localPathUrl = fileEntry.toURL();
+	                        if (device.platform === "Android" && localPathUrl.indexOf("file://") === 0) {
+	                            localPathUrl = localPath.substring(7);
+	                        }
+
+	                        var options = {
+	                            header: getHttpHeaders()
+	                        };
+
+	                        log("remote={0}, local={1}", remotePath, localPath);
+
+	                        var fileTransfer = new FileTransfer();
+	                        fileTransfer.download(
+	                            remotePath,
+	                            localPathUrl,
+	                            function(entry) {
+	                                log("[SUCCESS] attachImage({0}, remote)", imageId);
+	                                getLocalFile(localPath);
+	                            },
+	                            function(error) {
+	                                log("[ERROR] attachImage({0}, remote): {1}", imageId, error);
+	                                deferred.reject(error);
+	                            },
+	                            false, options
+	                        );
+	                    };
+
+	                    var getFileError = function(error) {
+	                        log("[ERROR] attachImage({0}): {1}", imageId, error);
+	                        deferred.reject(error);
+	                    };
+
+	                    fileEntry.file(getLocalFile, getRemoteFile, getFileError);
+	                }
+	            );
+	        }
+	    );
+
+	    return deferred.promise;
 	};
 
     return {
@@ -650,7 +801,9 @@ qolloApp.factory('ImageService', function($http, $q) {
         setImage : setImage,
         getCamera : getCamera,
         getAlbum : getAlbum,
-        sendImage : sendImage
+        sendImage : sendImage,
+        loadImages : loadImages,
+        attachImages : attachImages
     }
 
 });

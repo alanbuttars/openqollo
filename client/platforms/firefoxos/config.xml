@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.alanbuttars.qollo" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>OpenQollo</name>
-    <description>
-        A sample Apache Cordova application that responds to the deviceready event.
-    </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
-    </author>
-    <content src="index.html" />
-    <access origin="*" />
     <permission access="readwrite" description="Required for accessing address book." name="contacts" privileged="true" />
     <feature name="Camera">
         <param name="firefoxos-package" value="Camera" />
     </feature>
+    <feature name="Device">
+        <param name="firefoxos-package" value="Device" />
+    </feature>
     <permission name="systemXHR" privileged="true" />
+    <name>OpenQollo</name>
+    <description>
+        An open-source image-sharing application created with PhoneGap and AngularJS.
+    </description>
+    <author email="alanbuttars@gmail.com" href="http://alanbuttars.com">
+        Alan Buttars
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
 </widget>

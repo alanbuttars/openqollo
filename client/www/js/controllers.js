@@ -201,36 +201,20 @@ qolloControllers.controller('ProfileCtrl', ['UserService', '$scope', '$state',
 		);
 }]);
 
-qolloControllers.controller('NotificationsCtrl', ['DatabaseService', 'FriendService', '$scope', '$state',
-	function(DatabaseService, FriendService, $scope, $state) {
+qolloControllers.controller('NotificationsCtrl', ['DatabaseService', 'FriendService', 'ImageService', '$scope', '$state',
+	function(DatabaseService, FriendService, ImageService, $scope, $state) {
 
 		$scope.friendships = {
 			loading : true,
-			data : {},
+			data : [],
 			error : null
 		};
 
-		FriendService.getFriendshipNotifications().then(
-			function(notifications) {
-				DatabaseService.attachContactData(notifications).then(
-					function(data) {
-						$scope.friendships.loading = false;
-						$scope.friendships.data = data;
-						$scope.friendships.error = null;
-					},
-					function(error) {
-						$scope.friendships.loading = false;
-						$scope.friendships.data = {};
-						$scope.friendships.error = error;
-					}
-				)
-			},
-			function(error) {
-				$scope.friendships.loading = false;
-				$scope.friendships.data = {};
-				$scope.friendships.error = error;
-			}
-		);
+		$scope.images = {
+			loading : true,
+			data : [],
+			error : null
+		};
 
 		$scope.updateStatus = function(contactIndex, status) {
 			var contact = $scope.friendships.data[contactIndex];
@@ -250,6 +234,50 @@ qolloControllers.controller('NotificationsCtrl', ['DatabaseService', 'FriendServ
         		DatabaseService.resetContactCache("users");
         	}
 		};
+
+		var getFriendshipNotificationsError = function(error) {
+			$scope.friendships.loading = false;
+        	$scope.friendships.data = [];
+        	$scope.friendships.error = error;
+		};
+
+		FriendService.getFriendshipNotifications().then(
+			function(notifications) {
+				DatabaseService.attachContactData(notifications).then(
+					function(data) {
+						$scope.friendships.loading = false;
+						$scope.friendships.data = data;
+						$scope.friendships.error = null;
+					}, getFriendshipNotificationsError
+				);
+			}, getFriendshipNotificationsError
+		);
+
+		var getImagesError = function(error) {
+			$scope.images.loading = false;
+            $scope.images.error = error;
+		};
+
+		$scope.getImages = function(startIndex, numResults) {
+			ImageService.loadImages(startIndex, numResults).then(
+				function(notifications) {
+					ImageService.attachImages(notifications).then(
+						function(images) {
+							DatabaseService.attachContactData(images).then(
+								function(data) {
+									$scope.images.loading = false;
+									$.extend($scope.images.data, data);
+									$scope.images.error = null;
+								}, getImagesError
+							);
+						}, getImagesError
+					);
+				}, getImagesError
+			);
+		};
+
+		$scope.getImages(0, 12);
+
 }]);
 
 qolloControllers.controller('PeopleCtrl', ['DatabaseService', 'FriendService', '$rootScope', '$scope', '$state', '$timeout',
@@ -395,8 +423,8 @@ qolloControllers.controller('FriendsCtrl', ['DatabaseService', 'ImageService', '
 		$scope.send = function() {
 			$scope.confirmLoading = true;
 			$scope.confirmMessage = null;
-			var contactsSelectedIds = getObjectValues($scope.contactsSelected, "userId");
-			ImageService.sendImage(contactsSelectedIds).then(
+			var friendshipIds = getObjectValues($scope.contactsSelected, "friendshipId");
+			ImageService.sendImage(friendshipIds).then(
 				function(data) {
 					$scope.confirmLoading = false;
 					var successInfo = data.success;

@@ -25,6 +25,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Device\" value=\"Device\" />",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"File\" value=\"File\" />",
                             "count": 1
                         },
@@ -45,6 +49,10 @@
                         {
                             "xml": "<rim:permit>use_camera</rim:permit>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<rim:permit>read_device_identifying_information</rim:permit>",
+                            "count": 1
                         }
                     ]
                 }
@@ -61,7 +69,7 @@
         "org.apache.cordova.camera": {
             "PACKAGE_NAME": "com.alanbuttars.qollo"
         },
-        "org.apache.cordova.file": {
+        "org.apache.cordova.device": {
             "PACKAGE_NAME": "com.alanbuttars.qollo"
         },
         "org.apache.cordova.file-transfer": {
@@ -73,6 +81,9 @@
             "PACKAGE_NAME": "com.alanbuttars.qollo"
         },
         "com.blackberry.pim.lib": {
+            "PACKAGE_NAME": "com.alanbuttars.qollo"
+        },
+        "org.apache.cordova.file": {
             "PACKAGE_NAME": "com.alanbuttars.qollo"
         }
     }

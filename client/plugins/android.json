@@ -21,6 +21,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
@@ -48,7 +52,7 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 3
+                            "count": 2
                         }
                     ]
                 }
@@ -65,12 +69,16 @@
         "org.apache.cordova.camera": {
             "PACKAGE_NAME": "com.alanbuttars.qollo"
         },
-        "org.apache.cordova.file": {
+        "org.apache.cordova.device": {
             "PACKAGE_NAME": "com.alanbuttars.qollo"
         },
         "org.apache.cordova.file-transfer": {
             "PACKAGE_NAME": "com.alanbuttars.qollo"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "com.alanbuttars.qollo"
+        }
+    }
 }

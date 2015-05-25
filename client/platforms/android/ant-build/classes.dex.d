@@ -58,6 +58,7 @@
 /home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/org/apache/cordova/filetransfer/FileTransfer$4.class \
 /home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/org/apache/cordova/filetransfer/FileTransfer$RequestContext.class \
 /home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/org/apache/cordova/filetransfer/FileUploadResult.class \
+/home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/org/apache/cordova/device/Device.class \
 /home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/org/apache/cordova/contacts/ContactManager.class \
 /home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/org/apache/cordova/contacts/ContactManager$1.class \
 /home/devsnack/gap/qollo/client/platforms/android/ant-build/classes/org/apache/cordova/contacts/ContactManager$2.class \

@@ -17,6 +17,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Device\"><param name=\"firefoxos-package\" value=\"Device\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<permission name=\"systemXHR\" privileged=\"true\" />",
                             "count": 1
                         }
@@ -35,12 +39,16 @@
         "org.apache.cordova.camera": {
             "PACKAGE_NAME": "com.alanbuttars.qollo"
         },
-        "org.apache.cordova.file": {
+        "org.apache.cordova.device": {
             "PACKAGE_NAME": "com.alanbuttars.qollo"
         },
         "org.apache.cordova.file-transfer": {
             "PACKAGE_NAME": "com.alanbuttars.qollo"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "com.alanbuttars.qollo"
+        }
+    }
 }

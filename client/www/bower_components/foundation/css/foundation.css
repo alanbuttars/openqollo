@@ -134,7 +134,7 @@ select {
   margin-right: auto;
   margin-top: 0;
   margin-bottom: 0;
-  max-width: 62.5rem; }
+  max-width: 100% default; }
   .row:before, .footer:before, .row:after, .footer:after {
     content: " ";
     display: table; }
@@ -4645,7 +4645,7 @@ ul.pagination {
   @media only screen and (min-width: 40.063em) {
     .reveal-modal, dialog {
       width: 80%;
-      max-width: 62.5rem;
+      max-width: 100% default;
       left: 0;
       right: 0;
       margin: 0 auto; } }
@@ -4663,35 +4663,35 @@ ul.pagination {
   @media only screen and (min-width: 40.063em) {
     .reveal-modal.tiny, dialog.tiny {
       width: 30%;
-      max-width: 62.5rem;
+      max-width: 100% default;
       left: 0;
       right: 0;
       margin: 0 auto; } }
   @media only screen and (min-width: 40.063em) {
     .reveal-modal.small, dialog.small {
       width: 40%;
-      max-width: 62.5rem;
+      max-width: 100% default;
       left: 0;
       right: 0;
       margin: 0 auto; } }
   @media only screen and (min-width: 40.063em) {
     .reveal-modal.medium, dialog.medium {
       width: 60%;
-      max-width: 62.5rem;
+      max-width: 100% default;
       left: 0;
       right: 0;
       margin: 0 auto; } }
   @media only screen and (min-width: 40.063em) {
     .reveal-modal.large, dialog.large {
       width: 70%;
-      max-width: 62.5rem;
+      max-width: 100% default;
       left: 0;
       right: 0;
       margin: 0 auto; } }
   @media only screen and (min-width: 40.063em) {
     .reveal-modal.xlarge, dialog.xlarge {
       width: 95%;
-      max-width: 62.5rem;
+      max-width: 100% default;
       left: 0;
       right: 0;
       margin: 0 auto; } }
@@ -4706,7 +4706,7 @@ ul.pagination {
     @media only screen and (min-width: 40.063em) {
       .reveal-modal.full, dialog.full {
         width: 100vw;
-        max-width: 62.5rem;
+        max-width: 100% default;
         left: 0;
         right: 0;
         margin: 0 auto; } }
@@ -5623,7 +5623,7 @@ meta.foundation-mq-topbar {
       background: #333333; }
 
   .contain-to-grid .top-bar {
-    max-width: 62.5rem;
+    max-width: 100% default;
     margin: 0 auto;
     margin-bottom: 0; }
 
@@ -7490,5 +7490,40 @@ div.people-list {
     border-right: 2px solid #FFFFFF; }
   .footer .footer-section:last-child {
     border-right: none; }
+
+.image-list {
+  margin: 0;
+  list-style: none;
+  /* Prevent vertical gaps */
+  line-height: 0;
+  -webkit-column-count: 1;
+  -webkit-column-gap: 0px;
+  -moz-column-count: 1;
+  -moz-column-gap: 0px;
+  column-count: 1;
+  column-gap: 0px; }
+  .image-list .image-list-item {
+    position: relative;
+    width: 100%; }
+    .image-list .image-list-item img {
+      /* Just in case there are inline attributes */
+      width: 100% !important;
+      height: auto !important; }
+    .image-list .image-list-item .image-tag {
+      position: absolute;
+      top: 20px;
+      min-width: 20%;
+      max-width: 35%;
+      opacity: 0.8;
+      padding: 20px;
+      background-color: #00904B; }
+      .image-list .image-list-item .image-tag.left {
+        left: 0px; }
+        .image-list .image-list-item .image-tag.left div {
+          float: left; }
+      .image-list .image-list-item .image-tag.right, .image-list .image-list-item .tab-bar .qollo-filter .image-tag.qollo-filter-close, .tab-bar .qollo-filter .image-list .image-list-item .image-tag.qollo-filter-close, .image-list .image-list-item div.people-list label i.image-tag, div.people-list label .image-list .image-list-item i.image-tag {
+        right: 0px; }
+        .image-list .image-list-item .image-tag.right div, .image-list .image-list-item .tab-bar .qollo-filter .image-tag.qollo-filter-close div, .tab-bar .qollo-filter .image-list .image-list-item .image-tag.qollo-filter-close div, .image-list .image-list-item div.people-list label i.image-tag div, div.people-list label .image-list .image-list-item i.image-tag div {
+          float: right; }
 
 /*# sourceMappingURL=foundation.css.map */

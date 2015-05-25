@@ -34,7 +34,6 @@
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/www.iml \
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/img \
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/index.html \
-/home/devsnack/gap/qollo/client/platforms/android/assets/www/phonegap.js \
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/cordova.js \
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/templates \
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/plugins \
@@ -69,6 +68,7 @@
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/plugins/org.apache.cordova.file \
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/plugins/org.apache.cordova.camera \
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/plugins/org.apache.cordova.file-transfer \
+/home/devsnack/gap/qollo/client/platforms/android/assets/www/plugins/org.apache.cordova.device \
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/plugins/de.phonostar.softkeyboard \
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/plugins/org.apache.cordova.contacts \
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/plugins/org.apache.cordova.file/www \
@@ -102,6 +102,8 @@
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/plugins/org.apache.cordova.file-transfer/www \
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/plugins/org.apache.cordova.file-transfer/www/FileTransfer.js \
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/plugins/org.apache.cordova.file-transfer/www/FileTransferError.js \
+/home/devsnack/gap/qollo/client/platforms/android/assets/www/plugins/org.apache.cordova.device/www \
+/home/devsnack/gap/qollo/client/platforms/android/assets/www/plugins/org.apache.cordova.device/www/device.js \
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/plugins/de.phonostar.softkeyboard/www \
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/plugins/de.phonostar.softkeyboard/www/softkeyboard.js \
 /home/devsnack/gap/qollo/client/platforms/android/assets/www/plugins/org.apache.cordova.contacts/www \
