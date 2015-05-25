@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS `images`;
 
 CREATE TABLE IF NOT EXISTS `images` (
 `imageId` int(11) unsigned NOT NULL AUTO_INCREMENT,
+`friendshipId` int(11) unsigned NOT NULL,
 `senderUserId` int(11) unsigned NOT NULL,
 `receiverUserId` int(11) unsigned NOT NULL,
 `status` ENUM('live', 'deleted') NOT NULL DEFAULT 'live',
@@ -10,6 +11,8 @@ CREATE TABLE IF NOT EXISTS `images` (
 `timeSent` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
 `timeUpdated` timestamp NOT NULL DEFAULT now() ON UPDATE now(),
 PRIMARY KEY (`imageId`),
+CONSTRAINT FOREIGN KEY (`friendshipId`) REFERENCES `friendships`
+ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT FOREIGN KEY (`senderUserId`,`receiverUserId`) REFERENCES `users`
 ON DELETE CASCADE ON UPDATE CASCADE,
 UNIQUE KEY `ix_image` (`imageId`)
