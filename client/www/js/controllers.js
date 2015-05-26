@@ -204,6 +204,9 @@ qolloControllers.controller('ProfileCtrl', ['UserService', '$scope', '$state',
 qolloControllers.controller('NotificationsCtrl', ['DatabaseService', 'FriendService', 'ImageService', '$scope', '$state',
 	function(DatabaseService, FriendService, ImageService, $scope, $state) {
 
+		var startIndex = 0;
+		var numResultsPerLoad = 2;
+
 		$scope.friendships = {
 			loading : true,
 			data : [],
@@ -213,7 +216,8 @@ qolloControllers.controller('NotificationsCtrl', ['DatabaseService', 'FriendServ
 		$scope.images = {
 			loading : true,
 			data : [],
-			error : null
+			error : null,
+			done : false
 		};
 
 		$scope.updateStatus = function(contactIndex, status) {
@@ -258,25 +262,42 @@ qolloControllers.controller('NotificationsCtrl', ['DatabaseService', 'FriendServ
             $scope.images.error = error;
 		};
 
-		$scope.getImages = function(startIndex, numResults) {
-			ImageService.loadImages(startIndex, numResults).then(
+		$scope.getImages = function() {
+			$scope.images.loading = true;
+			$scope.images.error = null;
+			ImageService.loadImages(startIndex, numResultsPerLoad).then(
 				function(notifications) {
 					ImageService.attachImages(notifications).then(
 						function(images) {
 							DatabaseService.attachContactData(images).then(
 								function(data) {
 									$scope.images.loading = false;
-									$.extend($scope.images.data, data);
-									$scope.images.error = null;
+									$scope.images.done = data.length < numResultsPerLoad;
+									for (var i = 0; i < data.length; i++) {
+										$scope.images.data.push(data[i]);
+									}
 								}, getImagesError
 							);
 						}, getImagesError
 					);
 				}, getImagesError
 			);
+			$(window).bind('scroll', bindScroll);
 		};
 
-		$scope.getImages(0, 12);
+		function bindScroll() {
+			if (!$scope.images.done) {
+				if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+					$(window).unbind('scroll');
+					startIndex += 2;
+					$scope.getImages();
+				}
+			}
+		};
+
+		$scope.getImages();
+
+		$(window).scroll(bindScroll);
 
 }]);
 

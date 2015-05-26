@@ -242,7 +242,6 @@ qolloApp.factory('DatabaseService', function($http, $q, $rootScope) {
         };
 
         var store = function(transaction) {
-            //transaction.executeSql('drop table contacts');
             transaction.executeSql(
                 'create table if not exists contacts ' + //
                 '(qolloId integer primary key autoincrement, ' + //
@@ -357,7 +356,9 @@ qolloApp.factory('DatabaseService', function($http, $q, $rootScope) {
         return cache[type];
     };
 
-
+    /**
+     * Invalidate the cache for the given contact type
+     */
     var resetContactCache = function(type) {
         log("[SUCCESS] resetContactCache: {0}", type);
         cache[type] = null;
@@ -644,6 +645,9 @@ qolloApp.factory('ImageService', function($http, $q) {
         return deferred.promise;
 	};
 
+    /**
+     * Retrieves a sublist of the image notifications for the user.
+     */
 	var loadImages = function(startIndex, numResults) {
         var deferred = $q.defer();
 
@@ -668,6 +672,9 @@ qolloApp.factory('ImageService', function($http, $q) {
         return deferred.promise;
 	};
 
+    /**
+     * Given a collection of image information objects, attaches an image download promise to each.
+     */
 	var attachImages = function(imageInfos) {
 	    var promises = [];
 
@@ -690,6 +697,9 @@ qolloApp.factory('ImageService', function($http, $q) {
         "http://alanbuttars.com/img/zimbabwe.png",
 	];
 
+    /**
+     * Because of a bug with PhoneGap during this section's writing, a dummy solution is written here
+     */
 	var attachDummyImage = function(imageInfo) {
 	    var deferred = $q.defer();
 
@@ -702,6 +712,9 @@ qolloApp.factory('ImageService', function($http, $q) {
 	    return deferred.promise;
 	};
 
+    /**
+     * Attaches an image download promise to the given image information object
+     */
 	var attachImage = function(imageInfo) {
 	    var deferred = $q.defer();
 
@@ -714,6 +727,8 @@ qolloApp.factory('ImageService', function($http, $q) {
 	            fileSystem.root.getFile(localPath, {create : true, exclusive : false},
 
 	                function(fileEntry) {
+
+	                    /* 1. Attempt to grab the file locally, if it exists */
 	                    var getLocalFile = function(localFilePath) {
 	                        log("[INFO] attachImage({0}, local): attempt", imageId);
 	                        var reader = new FileReader();
@@ -736,6 +751,7 @@ qolloApp.factory('ImageService', function($http, $q) {
 	                        reader.readAsDataURL(localFilePath);
 	                    };
 
+                        /* 2. If the file doesn't exist locally, download it from the remote server */
 	                    var getRemoteFile = function() {
 	                        log("[INFO] attachImage({0}, remote): attempt", imageId);
 

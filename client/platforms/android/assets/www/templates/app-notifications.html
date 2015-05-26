@@ -19,7 +19,6 @@
         <h4 class="uppercase bolded">Images</h4>
     </div>
 </div>
-<div class="spinner center" ng-if="images.loading"></div>
 
 <div class="image-list">
     <div class="image-list-item" ng-repeat="image in images.data">
@@ -29,3 +28,5 @@
         <img ng-src="{{image.src}}" />
     </div>
 </div>
+
+<div class="spinner center" ng-if="images.loading"></div>
