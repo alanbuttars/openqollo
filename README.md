@@ -38,6 +38,7 @@ This will deploy the client application to a local address:
 ```
 
 #### 3. Download the PhoneGap Developer app
+![Download the PhoneGap Developer app from Google Play](http://alanbuttars.com/img/install_1_phonegap_download.png)
 
 #### 4. Open the PhoneGap Developer app and enter the IP address in step 2.
 ![Enter the IP into the PhoneGap Developer app](http://alanbuttars.com/img/install_2_phonegap_ip.png)
