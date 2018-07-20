@@ -6,13 +6,13 @@ OpenQollo
 ## Documentation
 A summary of the development process for this app is documented in my blog. Enjoy:
 
-* <a href="http://alanbuttars.com/blog.php?post=1">PhoneGap Part 1: OpenQollo's Login and Register</a>
-* <a href="http://alanbuttars.com/blog.php?post=2">PhoneGap Part 2: Authenticating REST calls</a>
-* <a href="http://alanbuttars.com/blog.php?post=3">PhoneGap Part 3: Angular UI Router</a>
-* <a href="http://alanbuttars.com/blog.php?post=4">PhoneGap Part 4: Reading contact lists and using the Web SQL database</a>
-* <a href="http://alanbuttars.com/blog.php?post=5">PhoneGap Part 5: MVC with Angular JS</a>
-* <a href="http://alanbuttars.com/blog.php?post=6">PhoneGap Part 6: Using the Cordova camera and file transfer plugins</a>
-* <a href="http://alanbuttars.com/blog.php?post=7">PhoneGap Part 7: Downloading with the file transfer plugin</a>
+* <a href="https://alanbuttars.com/blog/2">PhoneGap Part 1: OpenQollo's Login and Register</a>
+* <a href="https://alanbuttars.com/blog/3">PhoneGap Part 2: Authenticating REST calls</a>
+* <a href="https://alanbuttars.com/blog/4">PhoneGap Part 3: Angular UI Router</a>
+* <a href="https://alanbuttars.com/blog/5">PhoneGap Part 4: Reading contact lists and using the Web SQL database</a>
+* <a href="https://alanbuttars.com/blog/6">PhoneGap Part 5: MVC with Angular JS</a>
+* <a href="https://alanbuttars.com/blog/7">PhoneGap Part 6: Using the Cordova camera and file transfer plugins</a>
+* <a href="https://alanbuttars.com/blog/8">PhoneGap Part 7: Downloading with the file transfer plugin</a>
 
 ## Installation
 #### 1. Install the codebase
